@@ -105,24 +105,12 @@ function InventorySpankingToySetType(NewType) {
 	ChatRoomCharacterUpdate(C);
 
 	// Prepares the chat message to be published
-	var msg = "";
-	if (C.ID == 0) {
-
-		// Put on player text
-		msg = DialogFind(Player, "SpankingToysSetPlayer");
-		msg = msg.replace("SourceCharacter", Player.Name);
-		msg = msg.replace("Item", (NewType) ? NewType.toLowerCase() : "crop");
-
-	} else {
-
-		// Put on other character text
-		msg = DialogFind(Player, "SpankingToysSetOthers");
-		msg = msg.replace("SourceCharacter", Player.Name);
-		msg = msg.replace("DestinationCharacter", C.Name);
-		msg = msg.replace("Item", (NewType) ? NewType.toLowerCase() : "crop");
-
-	}
-	ChatRoomPublishCustomAction(msg, true);
+	var msg = C.ID == 0 ? "SpankingToysSetPlayer" : "SpankingToysSetOthers";
+	var Dictionary = [];
+	Dictionary.push({Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber});
+	Dictionary.push({Tag: "TargetCharacter", Text: C.Name, MemberNumber: C.MemberNumber});
+	Dictionary.push({Tag: "ItemUsed", Text: DialogFocusItem.Asset.DynamicDescription().toLowerCase()});
+	ChatRoomPublishCustomAction(msg, true, Dictionary);
 
 	// Exit from item when done
 	if (DialogInventory != null) {
