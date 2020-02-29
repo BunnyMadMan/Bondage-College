@@ -1,7 +1,6 @@
 // The main game canvas where everything will be drawn
 "use strict";
 var MainCanvas;
-var TempCanvas;
 var ColorCanvas;
 
 // A bank of all the chached images
@@ -41,7 +40,6 @@ function DrawLoad() {
 
 	// Creates the objects used in the game
 	MainCanvas = document.getElementById("MainCanvas").getContext("2d");
-	TempCanvas = document.createElement("canvas").getContext("2d");
 	ColorCanvas = document.createElement("canvas");
 	document.getElementById("MainCanvas").addEventListener("keypress", KeyDown);
 	document.getElementById("MainCanvas").tabIndex = 1000;
@@ -101,6 +99,29 @@ function DrawGetImageOnError(Img, IsAsset) {
 	}
 }
 
+// Draw the arousal meter below the player if allowed and should be visible to the player
+function DrawArousalMeter(C, X, Y, Zoom) {
+	if (((CurrentScreen == "ChatRoom") || ((CurrentScreen == "Private") && LogQuery("RentRoom", "PrivateRoom"))) && (CurrentCharacter == null))
+		if ((C.ArousalSettings != null) && (C.ArousalSettings.Active != null) && ((C.ArousalSettings.Active == "Manual") || (C.ArousalSettings.Active == "Hybrid") || (C.ArousalSettings.Active == "Automatic")))
+			if ((C.ID == 0) || ((C.ArousalSettings.Visible != null) && (C.ArousalSettings.Visible == "Access") && C.AllowItem) || ((C.ArousalSettings.Visible != null) && (C.ArousalSettings.Visible == "All"))) {
+
+				// Validates the current arousal progress
+				CharacterSetArousal(C, C.ArousalSettings.Progress);
+
+				// Draw the gradient meter with a white border if the user can control her meter or a gold border if she cannot
+				if (C.ID == 0) {
+					DrawRect(X + (400 * Zoom), Y + (200 * Zoom) - 2, (45 * Zoom) + 4, (500 * Zoom) + 4, (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white");
+					DrawImageZoomCanvas("Screens/Character/Player/ArousalMeter.png", MainCanvas, 0, 0, 50, 500, X + (400 * Zoom) + 2, Y + (200 * Zoom), 45 * Zoom, 500 * Zoom);
+					DrawEmptyRect(X + (400 * Zoom) + 1, Y + (200 * Zoom) + ((100 - C.ArousalSettings.Progress) * 4.5 * Zoom), (45 * Zoom) + 2, (50 * Zoom), (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white", 3);
+				} else {
+					DrawRect(X + (400 * Zoom), Y + (325 * Zoom) - 2, (22 * Zoom) + 4, (250 * Zoom) + 4, (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white");
+					DrawImageZoomCanvas("Screens/Character/Player/ArousalMeter.png", MainCanvas, 0, 0, 50, 500, X + (400 * Zoom) + 2, Y + (325 * Zoom), 22 * Zoom, 250 * Zoom);
+					DrawEmptyRect(X + (400 * Zoom) + 1, Y + (325 * Zoom) + ((100 - C.ArousalSettings.Progress) * 2.25 * Zoom), (22 * Zoom) + 2, (25 * Zoom), (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white", 3);
+				}
+
+			}
+}
+
 // Refreshes the character if not all images are loaded and draw the character canvas on the main game screen
 function DrawCharacter(C, X, Y, Zoom, IsHeightResizeAllowed) {
 	if ((C != null) && ((C.ID == 0) || (Player.Effect.indexOf("BlindHeavy") < 0) || (CurrentScreen == "InformationSheet"))) {
@@ -115,7 +136,7 @@ function DrawCharacter(C, X, Y, Zoom, IsHeightResizeAllowed) {
 		if ((Player != null) && (Player.VisualSettings != null) && (Player.VisualSettings.ForceFullHeight != null) && Player.VisualSettings.ForceFullHeight) HeightRatio = 1.0;
 		if (Zoom == null) Zoom = 1;
 		X += Zoom * Canvas.width * (1 - HeightRatio) / 2;
-		if (C.Pose.indexOf("Suspension") < 0) Y += Zoom * Canvas.height * (1 - HeightRatio);
+		if ((C.Pose.indexOf("Suspension") < 0) && (C.Pose.indexOf("SuspensionHogtied") < 0)) Y += Zoom * Canvas.height * (1 - HeightRatio);
 
 		// If we must dark the Canvas characters
 		if ((C.ID != 0) && Player.IsBlind() && (CurrentScreen != "InformationSheet")) {
@@ -139,8 +160,8 @@ function DrawCharacter(C, X, Y, Zoom, IsHeightResizeAllowed) {
 			var CanvasH = document.createElement("canvas");
 			CanvasH.width = Canvas.width;
 			CanvasH.height = Canvas.height;
-			CanvasH.getContext("2d").scale(1, -1);
-			CanvasH.getContext("2d").translate(0, -Canvas.height);
+			CanvasH.getContext("2d").rotate(Math.PI);
+			CanvasH.getContext("2d").translate(-Canvas.width, -Canvas.height);
 			CanvasH.getContext("2d").drawImage(Canvas, 0, 0);
 			Canvas = CanvasH;
 		}
@@ -154,22 +175,51 @@ function DrawCharacter(C, X, Y, Zoom, IsHeightResizeAllowed) {
 		if (C.Pose.indexOf("Suspension") >= 0) Y += (Zoom * Canvas.height * (1 - HeightRatio) / HeightRatio);
 
 		// Draws the character focus zones if we need too
-		if ((C.FocusGroup != null) && (C.FocusGroup.Zone != null))
-			for (var Z = 0; Z < C.FocusGroup.Zone.length; Z++)
-				if (C.Pose.indexOf("Suspension") >= 0)
-					DrawEmptyRect((HeightRatio * C.FocusGroup.Zone[Z][0]) + X, (1000 - (HeightRatio * (C.FocusGroup.Zone[Z][1] + Y + C.FocusGroup.Zone[Z][3]))) - C.HeightModifier, (HeightRatio * C.FocusGroup.Zone[Z][2]), (HeightRatio * C.FocusGroup.Zone[Z][3]), "cyan");
-				else
-					DrawEmptyRect((HeightRatio * C.FocusGroup.Zone[Z][0]) + X, (HeightRatio * C.FocusGroup.Zone[Z][1]) + Y - C.HeightModifier - (C.IsKneeling() ? (250 * (1 - HeightRatio)) : 0), (HeightRatio * C.FocusGroup.Zone[Z][2]), (HeightRatio * C.FocusGroup.Zone[Z][3]), "cyan");
+		if ((C.FocusGroup != null) && (C.FocusGroup.Zone != null) && (CurrentScreen != "Preference")) {
+
+			// Draw all the possible zones in transparent colors (gray if free, yellow if occupied, red if blocker)
+			for (var A = 0; A < AssetGroup.length; A++)
+				if (AssetGroup[A].Zone != null && AssetGroup[A].Name != C.FocusGroup.Name) {
+					var Color = "#80808040";
+					if (InventoryGroupIsBlocked(C, AssetGroup[A].Name)) Color = "#88000580";
+					else if (InventoryGet(C, AssetGroup[A].Name) != null) Color = "#D5A30080";
+					DrawAssetGroupZone(C, AssetGroup[A].Zone, HeightRatio, X, Y, Color, 5);
+				}
+
+			// Draw the focused zone in cyan
+			DrawAssetGroupZone(C, C.FocusGroup.Zone, HeightRatio, X, Y, "cyan");
+		}
 
 		// Draw the character name below herself
 		if ((C.Name != "") && ((CurrentModule == "Room") || (CurrentModule == "Online") || ((CurrentScreen == "Wardrobe") && (C.ID != 0))) && (CurrentScreen != "Private"))
 			if (!Player.IsBlind()) {
 				MainCanvas.font = "30px Arial";
-				DrawText(C.Name, X + 255 * Zoom, Y + 980 * Zoom, (CommonIsColor(C.LabelColor)) ? C.LabelColor : "White", "Black");
+				DrawText(C.Name, X + 255 * Zoom, Y + 980 * ((C.Pose.indexOf("SuspensionHogtied") < 0) ? Zoom : Zoom / HeightRatio), (CommonIsColor(C.LabelColor)) ? C.LabelColor : "White", "Black");
 				MainCanvas.font = "36px Arial";
 			}
-
+			
+		// Draw the arousal meter on certain conditions
+		DrawArousalMeter(C, X - Zoom * Canvas.width * (1 - HeightRatio) / 2, Y - Zoom * Canvas.height * (1 - HeightRatio), Zoom / HeightRatio);
+		
 	}
+}
+
+// Scans the item zone and draws it over the character
+function DrawAssetGroupZone(C, Zone, HeightRatio, X, Y, Color, Thickness = 3) {
+	for (var Z = 0; Z < Zone.length; Z++)
+		if (C.Pose.indexOf("Suspension") >= 0)
+			DrawEmptyRect((HeightRatio * Zone[Z][0]) + X, (1000 - (HeightRatio * (Zone[Z][1] + Y + Zone[Z][3]))) - C.HeightModifier, (HeightRatio * Zone[Z][2]), (HeightRatio * Zone[Z][3]), Color, Thickness);
+		else
+			DrawEmptyRect((HeightRatio * Zone[Z][0]) + X, HeightRatio * (Zone[Z][1] - C.HeightModifier) + Y, (HeightRatio * Zone[Z][2]), (HeightRatio * Zone[Z][3]), Color, Thickness);
+}
+
+// Scans the item zone and draws a background rectangle over it
+function DrawAssetGroupZoneBackground(C, Zone, HeightRatio, X, Y, Color) {
+	for (var Z = 0; Z < Zone.length; Z++)
+		if (C.Pose.indexOf("Suspension") >= 0)
+			DrawRect((HeightRatio * Zone[Z][0]) + X, (1000 - (HeightRatio * (Zone[Z][1] + Y + Zone[Z][3]))) - C.HeightModifier, (HeightRatio * Zone[Z][2]), (HeightRatio * Zone[Z][3]), Color);
+		else
+			DrawRect((HeightRatio * Zone[Z][0]) + X, HeightRatio * (Zone[Z][1] - C.HeightModifier) + Y, (HeightRatio * Zone[Z][2]), (HeightRatio * Zone[Z][3]), Color);
 }
 
 // Draw a zoomed image from a source to a specific canvas
@@ -431,7 +481,11 @@ function DrawButton(Left, Top, Width, Height, Label, Color, Image, HoveringText)
 	if ((HoveringText != null) && (MouseX >= Left) && (MouseX <= Left + Width) && (MouseY >= Top) && (MouseY <= Top + Height) && !CommonIsMobile) {
 		DrawButtonHover(Left, Top, Width, Height, HoveringText);
 	}
+}
 
+function DrawCheckbox(Left, Top, Width, Height, Text, IsChecked){
+    DrawText(Text, Left + 100, Top + 33, "Black", "Gray");
+    DrawButton(Left, Top, Width, Height, "", "White", IsChecked ? "Icons/Checked.png" : "");
 }
 
 // Draw a back & next button
@@ -460,9 +514,6 @@ function DrawBackNextButton(Left, Top, Width, Height, Label, Color, Image, BackT
 	DrawTextFit(Label, Left + Width / 2, Top + (Height / 2) + 1, (CommonIsMobile) ? Width - 6 : Width - 36, "Black");
 	if ((Image != null) && (Image != "")) DrawImage(Image, Left + 2, Top + 2);
 
-	// PC only section
-	if (CommonIsMobile) return;
-
 	// Draw the back arrow 
 	MainCanvas.beginPath();
 	MainCanvas.fillStyle = "black";
@@ -481,7 +532,8 @@ function DrawBackNextButton(Left, Top, Width, Height, Label, Color, Image, BackT
 	MainCanvas.stroke();
 	MainCanvas.closePath();
 
-	// Draw the hovering text
+	// Draw the hovering text on the PC
+	if (CommonIsMobile) return;
 	if (BackText == null) BackText = () => "MISSING VALUE FOR: BACK TEXT";
 	if (NextText == null) NextText = () => "MISSING VALUE FOR: NEXT TEXT";
 	if ((MouseX >= Left) && (MouseX <= Left + Width) && (MouseY >= Top) && (MouseY <= Top + Height))
@@ -508,10 +560,10 @@ function DrawButtonHover(Left, Top, Width, Height, HoveringText) {
 }
 
 // Draw a basic empty rectangle
-function DrawEmptyRect(Left, Top, Width, Height, Color) {
+function DrawEmptyRect(Left, Top, Width, Height, Color, Thickness = 3) {
 	MainCanvas.beginPath();
 	MainCanvas.rect(Left, Top, Width, Height);
-	MainCanvas.lineWidth = '3';
+	MainCanvas.lineWidth = Thickness.toString();
 	MainCanvas.strokeStyle = Color;
 	MainCanvas.stroke();
 }
@@ -564,13 +616,19 @@ function DrawProcess() {
 		}
 	}
 
-	// Gets the current screen background and draw it, a darker version in character dialog mode
+	// Gets the current screen background and draw it, it becomes darker in dialog mode or if the character is blindfolded
 	var B = window[CurrentScreen + "Background"];
-	if ((B != null) && (B != ""))
-		if (((Player.Effect.indexOf("BlindNormal") >= 0) || (Player.Effect.indexOf("BlindHeavy") >= 0)) && (CurrentModule != "Character"))
-			DrawRect(0, 0, 2000, 1000, "Black");
-		else
-			DrawImage("Backgrounds/" + B + ((((CurrentCharacter != null) || ShopStarted || (Player.Effect.indexOf("BlindLight") >= 0)) && (CurrentModule != "Character") && (B.indexOf("Dark") <= 0)) ? "Dark" : "") + ".jpg", 0, 0);
+	if ((B != null) && (B != "")) {
+		var DarkFactor = 1.0;
+		if ((CurrentModule != "Character") && (B != "Sheet")) {
+			if (Player.Effect.indexOf("BlindHeavy") >= 0) DarkFactor = 0.0;
+			else if (Player.Effect.indexOf("BlindNormal") >= 0) DarkFactor = 0.15;
+			else if (Player.Effect.indexOf("BlindLight") >= 0) DarkFactor = 0.3;
+			else if (CurrentCharacter != null || ShopStarted) DarkFactor = 0.5;
+		}
+		if (DarkFactor > 0.0) DrawImage("Backgrounds/" + B + ".jpg", 0, 0);
+		if (DarkFactor < 1.0) DrawRect(0, 0, 2000, 1000, "rgba(0,0,0," + (1.0 - DarkFactor) + ")");
+	}
 
 	// Draws the dialog screen or current screen if there's no loaded character
 	if (CurrentCharacter != null) DialogDraw();

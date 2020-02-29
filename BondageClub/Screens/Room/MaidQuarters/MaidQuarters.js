@@ -2,8 +2,7 @@
 var MaidQuartersBackground = "MaidQuarters";
 var MaidQuartersMaid = null;
 var MaidQuartersMaidInitiation = null;
-var MaidQuartersPreviousCloth = null;
-var MaidQuartersPreviousHat = null;
+var MaidQuartersItemClothPrev = {Cloth:null, Hat:null, ItemArms:null, ItemLegs:null, ItemFeet:null};
 var MaidQuartersMaidReleasedPlayer = false;
 var MaidQuartersCanBecomeMaid = false;
 var MaidQuartersCannotBecomeMaidYet = false;
@@ -32,7 +31,7 @@ function MaidQuartersAllowCancelRescue() { return (MaidQuartersCurrentRescueStar
 function MaidQuartersCanFreeSarah() { return (SarahUnlockQuest && LogQuery("LeadSorority", "Maid")) }
 function MaidQuartersCanReleasePlayer() { return (Player.IsRestrained() && !InventoryCharacterHasOwnerOnlyRestraint(Player) && CurrentCharacter.CanTalk() && CurrentCharacter.CanInteract()) }
 function MaidQuartersCannotReleasePlayer() { return (Player.IsRestrained() && (InventoryCharacterHasOwnerOnlyRestraint(Player) || !CurrentCharacter.CanTalk() || !CurrentCharacter.CanInteract())) }
-function MaidQuartersCanGetDusterGag() { return (!SarahUnlockQuest && LogQuery("JoinedSorority", "Maid") && Player.CanTalk() && CurrentCharacter.CanTalk() && CurrentCharacter.CanInteract() && !InventoryAvailable(Player, "DusterGag", "ItemMouth")) }
+function MaidQuartersCanGetDusterGag() { return (!SarahUnlockQuest && LogQuery("JoinedSorority", "Maid") && Player.CanTalk() && CurrentCharacter.CanTalk() && CurrentCharacter.CanInteract() && (!InventoryAvailable(Player, "DusterGag", "ItemMouth") || !InventoryAvailable(Player, "DusterGag", "ItemMouth2") || !InventoryAvailable(Player, "DusterGag", "ItemMouth3"))) }
 function MaidQuartersOnlineDrinkCompleted() { return (MaidQuartersOnlineDrinkCount >= 5) }
 function MaidQuartersCanUngag() { return (!Player.CanTalk() && !InventoryCharacterHasOwnerOnlyRestraint(Player)) }
 function MaidQuartersCannotUngag() { return (!Player.CanTalk() && InventoryCharacterHasOwnerOnlyRestraint(Player)) }
@@ -89,8 +88,11 @@ function MaidQuartersMaidUngagPlayer() {
 
 // When the player dresses as a maid
 function MaidQuartersWearMaidUniform() {
-	MaidQuartersPreviousCloth = InventoryGet(Player, "Cloth");
-	MaidQuartersPreviousHat = InventoryGet(Player, "Hat");
+	for(var ItemAssetGroupName in MaidQuartersItemClothPrev){
+		MaidQuartersItemClothPrev[ItemAssetGroupName] = InventoryGet(Player, ItemAssetGroupName);
+		InventoryRemove(Player, ItemAssetGroupName);
+	}
+
 	InventoryWear(Player, "MaidOutfit1", "Cloth", "Default");
 	InventoryWear(Player, "MaidHairband1", "Hat", "Default");
 }
@@ -98,10 +100,14 @@ function MaidQuartersWearMaidUniform() {
 // When the player removes the maid uniform and dresses back
 function MaidQuartersRemoveMaidUniform() {
 	CharacterRelease(Player);
-	if (MaidQuartersPreviousCloth != null) InventoryWear(Player, MaidQuartersPreviousCloth.Asset.Name, "Cloth", MaidQuartersPreviousCloth.Color);
-	else InventoryRemove(Player, "Cloth");
-	if (MaidQuartersPreviousHat != null) InventoryWear(Player, MaidQuartersPreviousHat.Asset.Name, "Hat", MaidQuartersPreviousHat.Color);
-	else InventoryRemove(Player, "Hat");
+	for(var ItemAssetGroupName in MaidQuartersItemClothPrev){
+		var PreviousItem = MaidQuartersItemClothPrev[ItemAssetGroupName];
+		InventoryRemove(Player, ItemAssetGroupName);
+		if(PreviousItem) InventoryWear(Player, PreviousItem.Asset.Name, ItemAssetGroupName, PreviousItem.Color);
+		if(PreviousItem && PreviousItem.Property) InventoryGet(Player, ItemAssetGroupName).Property = PreviousItem.Property
+		MaidQuartersItemClothPrev[ItemAssetGroupName] = null;
+	}
+
 	InventoryRemove(Player, "ItemMisc");
 }
 
@@ -186,6 +192,8 @@ function MaidQuartersChangeInitiationMaid() {
 function MaidQuartersBecomMaid() {
 	InventoryAdd(Player, "MaidOutfit1", "Cloth");
 	InventoryAdd(Player, "MaidOutfit2", "Cloth");
+	InventoryAdd(Player, "MaidApron1", "Cloth");
+	InventoryAdd(Player, "MaidApron2", "Cloth");
 	InventoryAdd(Player, "MaidHairband1", "Hat");
 	InventoryWear(Player, "MaidOutfit1", "Cloth", "Default");
 	InventoryWear(Player, "MaidHairband1", "Hat", "Default");
@@ -211,8 +219,9 @@ function MaidQuartersStartRescue() {
 	MaidQuartersMaid.CurrentDialog = DialogFind(MaidQuartersMaid, "Rescue" + MaidQuartersCurrentRescue);
 	MaidQuartersCurrentRescueStarted = false;
 	MaidQuartersCurrentRescueCompleted = false;
-	MaidQuartersPreviousCloth = InventoryGet(Player, "Cloth");
-	MaidQuartersPreviousHat = InventoryGet(Player, "Hat");
+	
+	MaidQuartersItemClothPrev.Cloth = InventoryGet(Player, "Cloth");
+	MaidQuartersItemClothPrev.Hat = InventoryGet(Player, "Hat");
 
 }
 
@@ -233,6 +242,8 @@ function MaidQuartersFreeSarah() {
 // The maid can give a duster gag to the player if she's in the sorority
 function MaidQuartersGetDusterGag() {
 	InventoryAdd(Player, "DusterGag", "ItemMouth");
+	InventoryAdd(Player, "DusterGag", "ItemMouth2");
+	InventoryAdd(Player, "DusterGag", "ItemMouth3");
 }
 
 // When the online drink mini game starts

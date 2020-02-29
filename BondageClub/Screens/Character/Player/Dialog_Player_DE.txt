@@ -179,8 +179,8 @@ im Raum
 (Als du die luxoriöse Eingangshalle betrittst, wirst du von einem Hausmädchen begrüßt.) Willkommen im Bondage-Club, bist du zum ersten Mal hier?
 SourceCharacter is offering you to start a trial period as her submissive.  Click on her and manage your relationship to accept, don't do anything to refuse.
 SourceCharacter bietet dir eine Probezeit als ihre Sklavin an. Um dies zu akzeptieren, klicke sie an und bearbeite eure Beziehung. Zum Ablehnen musst du nichts tun.
-The Bondage Club is pleased to announce that SourceCharacter is starting a 3 days minimum trial period as a submissive.
-Es ist dem Bondage-Club eine Freude, die mindestens dreitägige Probezeit von SourceCharacter als Untergebene zu verkünden.
+The Bondage Club is pleased to announce that SourceCharacter is starting a 7 days minimum trial period as a submissive.
+Es ist dem Bondage-Club eine Freude, die mindestens siebentägige Probezeit von SourceCharacter als Untergebene zu verkünden.
 SourceCharacter has prepared a great collaring ceremony.  A maid brings a slave collar, which her submissive must consent to wear.
 SourceCharacter hat eine fabelhafte Halsband-Zeremonie vorbereitet. Ein Hausmädchen bringt ein Sklavinnen-Halsband, das die Untergebene freien Willens annehmen muss.
 The Bondage Club is proud to announce that SourceCharacter is now fully collared.  Her fate is in her Mistress hands.
@@ -223,6 +223,12 @@ SourceCharacter rolls a DiceType sided dice.  The result is: DiceResult.
 SourceCharacter rollt einen DiceType-seitigen Würfel. Das Ergebnis ist: DiceResult.
 SourceCharacter flips a coin.  The result is: CoinResult.
 SourceCharacter wirft eine Münze. Das Ergebnis ist: CoinResult.
+TargetCharacterName gets grabbed by two maids and locked in a timer cell, following her owner commands.
+TargetCharacterName wird auf Befehl ihrer Besitzerin von zwei Hausmädchen gepackt und in eine Timer-Zelle gesperrt.
+TargetCharacterName gets grabbed by two maids and escorted to the maid quarters to serve drinks for her owner.
+TargetCharacterName wird von zwei Hausmädchen gepackt und in die Dienerkammer gebracht, um für ihre Besitzerin Getränke zu servieren.
+TargetCharacterName gives a sealed envelope to her owner.
+TargetCharacterName gibt ihrer Besitzerin einen versiegelten Umschlag.
 SourceCharacter picks a glass of water from DestinationCharacter tray.
 SourceCharacter nimmt sich ein Glas Wasser von DestinationCharacter Servierplatte.
 SourceCharacter picks an orange juice from DestinationCharacter tray.

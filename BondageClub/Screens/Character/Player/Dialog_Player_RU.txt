@@ -146,7 +146,17 @@ plug
 gag
 кляп
 's
-'s
+ы
+Heads
+Головы
+Tails
+Хвосты
+her
+ее
+SourceCharacter kneels down
+SourceCharacter преклонить колени
+SourceCharacter stands up
+SourceCharacter встать
 Delete
 Delete
 Confirm
@@ -171,8 +181,8 @@ in room
 (Как вы входите в роскошный холл, горничная приходит приветствовать вас.)  Добро пожаловать в Бондаж Клуб, это ваш первый визит?
 SourceCharacter is offering you to start a trial period as her submissive.  Click on her and manage your relationship to accept, don't do anything to refuse.
 SourceCharacter is offering you to start a trial period as her submissive.  Click on her and manage your relationship to accept, don't do anything to refuse.
-The Bondage Club is pleased to announce that SourceCharacter is starting a 3 days minimum trial period as a submissive.
-The Bondage Club is pleased to announce that SourceCharacter is starting a 3 days minimum trial period as a submissive.
+The Bondage Club is pleased to announce that SourceCharacter is starting a 7 days minimum trial period as a submissive.
+The Bondage Club is pleased to announce that SourceCharacter is starting a 7 days minimum trial period as a submissive.
 SourceCharacter has prepared a great collaring ceremony.  A maid brings a slave collar, which her submissive must consent to wear.
 SourceCharacter has prepared a great collaring ceremony.  A maid brings a slave collar, which her submissive must consent to wear.
 The Bondage Club is proud to announce that SourceCharacter is now fully collared.  Her fate is in her Mistress hands.
@@ -199,6 +209,28 @@ Your owner is now preventing you from getting new keys.  The club shop will not 
 Your owner is now preventing you from getting new keys.  The club shop will not sell keys to you anymore.
 You're on SourceCharacter blacklist.  Your message was blocked by the server.
 You're on SourceCharacter blacklist.  Your message was blocked by the server.
+SourceCharacter swaps a PrevAsset for a NextAsset on DestinationCharacter FocusAssetGroup.
+SourceCharacter  заменяет PrevAsset на NextAsset в DestinationCharacter FocusAssetGroup.
+SourceCharacter uses a NextAsset on DestinationCharacter FocusAssetGroup.
+SourceCharacter  использует NextAsset в DestinationCharacter FocusAssetGroup.
+SourceCharacter locks a NextAsset on DestinationCharacter FocusAssetGroup.
+SourceCharacter  блокирует NextAsset в DestinationCharacter FocusAssetGroup.
+SourceCharacter adds a NextAsset on DestinationCharacter FocusAssetGroup PrevAsset.
+SourceCharacter  добавляет NextAsset к DestinationCharacter FocusAssetGroup PrevAsset.
+SourceCharacter removes the PrevAsset from DestinationCharacter FocusAssetGroup.
+SourceCharacter  удаляет PrevAsset из DestinationCharacter FocusAssetGroup.
+SourceCharacter unlocks and removes the PrevAsset from DestinationCharacter FocusAssetGroup.
+SourceCharacter разблокирует и удаляет PrevAsset из DestinationCharacter FocusAssetGroup.
+SourceCharacter rolls a DiceType sided dice.  The result is: DiceResult.
+SourceCharacter бросает кости.  В результате получается: DiceResult.
+SourceCharacter flips a coin.  The result is: CoinResult.
+SourceCharacter переворачивает монету.  Результат таков: CoinResult.
+TargetCharacterName gets grabbed by two maids and locked in a timer cell, following her owner commands.
+TargetCharacterName ее схватили две горничные и заперли в клетке с таймером, следуя командам ее хозяйки.
+TargetCharacterName gets grabbed by two maids and escorted to the maid quarters to serve drinks for her owner.
+TargetCharacterName ее схватили две горничные и сопроводили в комнату для прислуги, чтобы подать напитки для ее хозяйки.
+TargetCharacterName gives a sealed envelope to her owner.
+TargetCharacterName дает запечатанный конверт ее хозяйке.
 SourceCharacter picks a glass of water from DestinationCharacter tray.
 SourceCharacter берет стакан воды с подноса DestinationCharacter.
 SourceCharacter picks an orange juice from DestinationCharacter tray.

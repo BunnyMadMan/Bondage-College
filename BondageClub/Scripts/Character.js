@@ -32,7 +32,7 @@ function CharacterReset(CharacterID, CharacterAssetFamily) {
 		HeightModifier: 0,
 		CanTalk: function () { return ((this.Effect.indexOf("GagVeryLight") < 0) && (this.Effect.indexOf("GagLight") < 0) && (this.Effect.indexOf("GagEasy") < 0) && (this.Effect.indexOf("GagNormal") < 0) && (this.Effect.indexOf("GagMedium") < 0) && (this.Effect.indexOf("GagHeavy") < 0) && (this.Effect.indexOf("GagVeryHeavy") < 0) && (this.Effect.indexOf("GagTotal") < 0) && (this.Effect.indexOf("GagTotal2") < 0) && (this.Effect.indexOf("GagTotal3") < 0) && (this.Effect.indexOf("GagTotal4") < 0)) },
 		CanWalk: function () { return ((this.Effect.indexOf("Freeze") < 0) && (this.Effect.indexOf("Tethered") < 0) && ((this.Pose == null) || (this.Pose.indexOf("Kneel") < 0) || (this.Effect.indexOf("KneelFreeze") < 0))) },
-		CanKneel: function () { return ((this.Effect.indexOf("Freeze") < 0) && (this.Effect.indexOf("ForceKneel") < 0) && ((this.Pose == null) || (this.Pose.indexOf("LegsClosed") < 0))) },
+		CanKneel: function () { return ((this.Effect.indexOf("Freeze") < 0) && (this.Effect.indexOf("ForceKneel") < 0) && ((this.Pose == null) || ((this.Pose.indexOf("LegsClosed") < 0) && (this.Pose.indexOf("Supension") < 0) && (this.Pose.indexOf("Hogtied") < 0)))) },
 		CanInteract: function () { return (this.Effect.indexOf("Block") < 0) },
 		CanChange: function () { return ((this.Effect.indexOf("Freeze") < 0) && (this.Effect.indexOf("Block") < 0) && (this.Effect.indexOf("Prone") < 0) && !LogQuery("BlockChange", "Rule") && (!LogQuery("BlockChange", "OwnerRule") || (Player.Ownership == null) || (Player.Ownership.Stage != 1))) },
 		IsProne: function () { return (this.Effect.indexOf("Prone") >= 0) },
@@ -47,6 +47,9 @@ function CharacterReset(CharacterID, CharacterAssetFamily) {
 		IsOwned: function () { return ((this.Owner != null) && (this.Owner.trim() != "")) },
 		IsOwnedByPlayer: function () { return (((((this.Owner != null) && (this.Owner.trim() == Player.Name)) || (NPCEventGet(this, "EndDomTrial") > 0)) && (this.Ownership == null)) || ((this.Ownership != null) && (this.Ownership.MemberNumber != null) && (this.Ownership.MemberNumber == Player.MemberNumber))) },
 		IsOwner: function () { return ((NPCEventGet(this, "EndSubTrial") > 0) || (this.Name == Player.Owner.replace("NPC-", ""))) },
+		IsLoved: function () { return ((this.Lover != null) && (this.Lover.trim() != "")) },
+		IsLoverOfPlayer: function () { return (((((this.Lover != null) && (this.Lover.trim() == Player.Name)) || (NPCEventGet(this, "Girlfriend") > 0)) && (this.Lovership == null)) || ((this.Lovership != null) && (this.Lovership.MemberNumber != null) && (this.Lovership.MemberNumber == Player.MemberNumber))) },
+		IsLover: function () { return ((NPCEventGet(this, "Girlfriend") > 0) || (this.Name == Player.Lover.replace("NPC-", ""))) },
 		IsKneeling: function () { return ((this.Pose != null) && (this.Pose.indexOf("Kneel") >= 0)) },
 		IsNaked: function () { return CharacterIsNaked(this); },
 		IsDeaf: function () { return ((this.Effect.indexOf("DeafLight") >= 0) || (this.Effect.indexOf("DeafNormal") >= 0) || (this.Effect.indexOf("DeafHeavy") >= 0)) },
@@ -152,6 +155,7 @@ function CharacterArchetypeClothes(C, Archetype, ForceColor) {
 		CharacterAppearanceSetItem(C, "Hat", C.Inventory[C.Inventory.length - 1].Asset);
 		CharacterAppearanceSetColorForGroup(C, "Default", "Hat");
 		InventoryAdd(C, "MaidOutfit2", "Cloth", false);
+		InventoryRemove(C, "ClothAccessory");
 		InventoryRemove(C, "HairAccessory1");
 		InventoryRemove(C, "HairAccessory2");
 		InventoryRemove(C, "ClothLower");
@@ -174,6 +178,7 @@ function CharacterArchetypeClothes(C, Archetype, ForceColor) {
 		InventoryAdd(C, "MistressPadlock", "ItemMisc", false);
 		InventoryAdd(C, "MistressTimerPadlock","ItemMisc", false);
 		InventoryAdd(C, "MistressPadlockKey", "ItemMisc", false);
+		InventoryRemove(C, "ClothAccessory");
 		InventoryRemove(C, "HairAccessory1");
 		InventoryRemove(C, "HairAccessory2");
 	}
@@ -213,7 +218,9 @@ function CharacterOnlineRefresh(Char, data, SourceMemberNumber) {
 	Char.LabelColor = data.LabelColor;
 	Char.Creation = data.Creation;
 	if (Char.ID != 0) Char.ItemPermission = data.ItemPermission;
+	if (Char.ID != 0) Char.ArousalSettings = data.ArousalSettings;
 	Char.Ownership = data.Ownership;
+	Char.Lovership = data.Lovership;
 	Char.Reputation = (data.Reputation != null) ? data.Reputation : [];
 	Char.BlockItems = Array.isArray(data.BlockItems) ? data.BlockItems : [];
 	Char.Appearance = ServerAppearanceLoadFromBundle(Char, "Female3DCG", data.Appearance, SourceMemberNumber);
@@ -247,7 +254,8 @@ function CharacterLoadOnline(data, SourceMemberNumber) {
 		Char.Title = data.Title;
 		Char.Description = data.Description;
 		Char.AccountName = "Online-" + data.ID.toString();
-		Char.MemberNumber = data.MemberNumber;	
+		Char.MemberNumber = data.MemberNumber;
+		Char.AllowItem = false;
 		var BackupCurrentScreen = CurrentScreen;
 		CurrentScreen = "ChatRoom";
 		CharacterLoadCSVDialog(Char, "Screens/Online/ChatRoom/Dialog_Online");
@@ -283,8 +291,10 @@ function CharacterLoadOnline(data, SourceMemberNumber) {
 								else if (((New.Property != null) && (Old.Property == null)) || ((New.Property == null) && (Old.Property != null))) Refresh = true;
 							}
 
-		// Flags "refresh" if the ownership or inventory or blockitems has changed
+		// Flags "refresh" if the ownership or or lovership or inventory or blockitems has changed
 		if (!Refresh && (JSON.stringify(Char.Ownership) !== JSON.stringify(data.Ownership))) Refresh = true;
+		if (!Refresh && (JSON.stringify(Char.Lovership) !== JSON.stringify(data.Lovership))) Refresh = true;
+		if (!Refresh && (JSON.stringify(Char.ArousalSettings) !== JSON.stringify(data.ArousalSettings))) Refresh = true;
 		if (!Refresh && (data.Inventory != null) && (Char.Inventory.length != data.Inventory.length)) Refresh = true;
 		if (!Refresh && (data.BlockItems != null) && (Char.BlockItems.length != data.BlockItems.length)) Refresh = true;
 
@@ -535,8 +545,9 @@ function CharacterSetActivePose(C, NewPose) {
 	CharacterRefresh(C, false);
 }
 
-// Sets a specific facial expression for the character's specified AssetGruo
-function CharacterSetFacialExpression(C, AssetGroup, Expression) {
+// Sets a specific facial expression for the character's specified AssetGroup, if there's a timer, the expression will expire after it, a timed expression cannot override another one
+function CharacterSetFacialExpression(C, AssetGroup, Expression, Timer) {
+	if ((Timer != null) && (InventoryGet(C, AssetGroup) != null) && (InventoryGet(C, AssetGroup).Property != null) && (InventoryGet(C, AssetGroup).Property.Expression != null)) return;
 	for (var A = 0; A < C.Appearance.length; A++) {
 		if ((C.Appearance[A].Asset.Group.Name == AssetGroup) && (C.Appearance[A].Asset.Group.AllowExpression)) {
 			if ((Expression == null) || (C.Appearance[A].Asset.Group.AllowExpression.indexOf(Expression) >= 0)) {
@@ -546,6 +557,7 @@ function CharacterSetFacialExpression(C, AssetGroup, Expression) {
 					CharacterRefresh(C);
 					ChatRoomCharacterUpdate(C);
 				}
+				if (Timer != null) TimerInventoryRemoveSet(C, AssetGroup, Timer);
 				return;
 			}
 		}
@@ -559,8 +571,18 @@ function CharacterResetFacialExpression(C) {
 			CharacterSetFacialExpression(C, C.Appearance[A].Asset.Group.Name, null);
 }
 
-
 // returns the current selected character
 function CharacterGetCurrent() {
 	return (Player.FocusGroup != null) ? Player : CurrentCharacter;
+}
+
+// Sets the character arousal level and validates the value
+function CharacterSetArousal(C, Progress) {
+	if ((Progress == null) || (Progress < 0)) Progress = 0;
+	if (Progress > 100) Progress = 100;
+	if ((C.ArousalSettings.Progress == null) || (C.ArousalSettings.Progress != Progress)) {
+		C.ArousalSettings.Progress = Progress;
+		if ((C.ID == 0) && (CurrentScreen == "ChatRoom"))
+			ChatRoomCharacterUpdate(Player);
+	}
 }

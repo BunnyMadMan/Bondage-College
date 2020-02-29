@@ -76,6 +76,10 @@ function CreationResponse(data) {
 			Log = [];
 			ImportBondageCollege(Player);
 
+			// Calls the preference init to make sure the preferences are loaded correctly
+			PreferenceInit(Player);
+			CharacterSetArousal(Player, 0);
+
 			// Flush the controls and enters the main hall
 			ServerPlayerAppearanceSync();
 			ElementRemove("InputCharacter");
@@ -104,12 +108,7 @@ function CreationClick() {
 
 	// If we must go back to the login screen
 	if ((MouseX >= 1440) && (MouseX <= 1560) && (MouseY >= 920) && (MouseY <= 980)) {
-		ElementRemove("InputCharacter");
-		ElementRemove("InputName");
-		ElementRemove("InputPassword1");
-		ElementRemove("InputPassword2");
-		ElementRemove("InputEmail");
-		CommonSetScreen("Character", "Login");
+		CreationExit();
 	}
 	
 	// If we must try to create a new account (make sure we don't create it twice)
@@ -139,4 +138,14 @@ function CreationClick() {
 		} else CreationMessage = TextGet("BothPasswordDoNotMatch");
 	}
 
+}
+
+// when the user exit this screen
+function CreationExit() {
+	ElementRemove("InputCharacter");
+	ElementRemove("InputName");
+	ElementRemove("InputPassword1");
+	ElementRemove("InputPassword2");
+	ElementRemove("InputEmail");
+	CommonSetScreen("Character", "Login");
 }
