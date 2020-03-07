@@ -1,12 +1,12 @@
 "use strict";
 
 // Loads the item extension properties
-function InventoryItemButtBunnyTailVibePlug() {
+function InventoryItemButtBunnyTailVibePlugLoad() {
 	if (DialogFocusItem.Property == null) DialogFocusItem.Property = { Intensity: -1 };
 }
 
 // Draw the item extension screen
-function InventoryItemButtBunnyTailVibePlug() {
+function InventoryItemButtBunnyTailVibePlugDraw() {
 	DrawRect(1387, 225, 225, 275, "white");
 	if (DialogFocusItem.Property.Intensity >= 0)
 		DrawImageResize("Assets/" + DialogFocusItem.Asset.Group.Family + "/" + DialogFocusItem.Asset.Group.Name + "/Preview/" + DialogFocusItem.Asset.Name + ".png", 1389 + Math.floor(Math.random() * 3) - 1, 227 + Math.floor(Math.random() * 3) - 1, 221, 221);
