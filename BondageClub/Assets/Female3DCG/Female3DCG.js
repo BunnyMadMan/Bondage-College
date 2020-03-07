@@ -1008,7 +1008,7 @@ var AssetFemale3DCG = [
 			{ Name: "DemonPlug", Value: 45, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }] },
 			{ Name: "BunnyTailPlug1", Value: 1, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10}] },
 			{ Name: "BunnyTailPlug2", Value: 1, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10}] },
-			{ Name: "BunnyTailVibePlug1", Value: 1, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10}], AllowEffect: ["Egged", "Vibrating"], Visible: false },
+			{ Name: "BunnyTailVibePlug", Effect: ["Egged"], Value: 1, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10}], AllowEffect: ["Egged", "Vibrating"], Visible: false },
 			AssetSpankingToys
 		]
 	},
