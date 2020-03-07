@@ -231,7 +231,8 @@ HairAccessory1,PuppyEars2,Floppy Puppy Ears
 HairAccessory1,RaccoonEars1,Raccoon Ears
 HairAccessory1,WeddingVeil1,Wedding Veil
 HairAccessory1,HairFeathers1,Feathers
-HairAccessory1,VeilTest,Veil Test
+HairAccessory1,Veil1,Veil 1
+HairAccessory1,Veil2,Veil 2
 HairAccessory2,,Hair Accessory
 HairAccessory2,Ears1,Ears Small
 HairAccessory2,Ears2,Ears Large
@@ -795,7 +796,8 @@ ItemHead,BunnyMask3,Bunny Mask 3
 ItemHead,BunnyMask4,Bunny Mask 4
 ItemHead,BunnyMask5,Bunny Mask 5
 ItemHead,BunnyMask6,Bunny Mask 6
-ItemHead,VeilTest,Veil Test
+ItemHead,Veil3,Veil 3
+ItemHead,Veil4,Veil 4
 ItemEars,,Ears
 ItemEars,LightDutyEarPlugs,Light Duty Ear Plugs
 ItemEars,HeavyDutyEarPlugs,Heavy Duty Ear Plugs
