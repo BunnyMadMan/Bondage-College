@@ -464,7 +464,8 @@ var AssetFemale3DCG = [
 			{ Name: "RaccoonEars1", Value: 15, BuyGroup: "RaccoonEars1"},
 			{ Name: "WeddingVeil1", Priority: 4, Value: 30, BuyGroup: "WeddingVeil1"},
 			{ Name: "HairFeathers1", Value: 10, BuyGroup: "HairFeathers1"},
-			{ Name: "VeilTest", Value: 1, BuyGroup: "VeilTest"}
+			{ Name: "Veil1", Value: 1, BuyGroup: "Veil1"},
+			{ Name: "Veil2", Value: 1, BuyGroup: "Veil2"}
 		]
 	},
 	
@@ -1849,7 +1850,8 @@ var AssetFemale3DCG = [
 		    { Name: "BunnyMask4", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true },
 		    { Name: "BunnyMask5", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true },
 		    { Name: "BunnyMask6", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true },
-		    { Name: "VeilTest", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true }
+			{ Name: "Veil3", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true },
+			{ Name: "Veil4", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true }
 		]
 	},
 
