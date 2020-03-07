@@ -48,5 +48,5 @@ function InventoryItemButtVibratingButtplugSetIntensity(Modifier) {
 	CharacterLoadEffect(C);
 	if (C.ID == 0) ServerPlayerAppearanceSync();
 
-	ChatRoomPublishCustomAction("BunnyTailVibePlug" + ((Modifier > 0) ? "Increase" : "Decrease") + "To" + DialogFocusItem.Property.Intensity, true, [{Tag: "DestinationCharacterName", Text: C.Name, MemberNumber: C.MemberNumber}]);
+	ChatRoomPublishCustomAction("Buttplug" + ((Modifier > 0) ? "Increase" : "Decrease") + "To" + DialogFocusItem.Property.Intensity, true, [{Tag: "DestinationCharacterName", Text: C.Name, MemberNumber: C.MemberNumber}]);
 }
