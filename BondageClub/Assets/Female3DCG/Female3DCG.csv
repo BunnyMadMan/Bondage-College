@@ -231,6 +231,7 @@ HairAccessory1,PuppyEars2,Floppy Puppy Ears
 HairAccessory1,RaccoonEars1,Raccoon Ears
 HairAccessory1,WeddingVeil1,Wedding Veil
 HairAccessory1,HairFeathers1,Feathers
+HairAccessory1,VeilTest,Veil Test
 HairAccessory2,,Hair Accessory
 HairAccessory2,Ears1,Ears Small
 HairAccessory2,Ears2,Ears Large
@@ -486,6 +487,9 @@ ItemButt,WolfTail1,Wolf Tail Large
 ItemButt,WolfTail2,Wolf Tail Small
 ItemButt,WolfTail3,Wolf Tail White
 ItemButt,DemonPlug,Demon Tail Plug
+ItemButt,BunnyTailPlug1,Bunny Tail Plug
+ItemButt,BunnyTailPlug2,Bunny Tail Plug
+ItemButt,BunnyTailVibePlug1,Bunny Tail Vibe Plug
 ItemPelvis,,Pelvis
 ItemPelvis,StraponPanties,Strap-On Panties
 ItemPelvis,LeatherChastityBelt,Leather Chastity Belt
@@ -785,6 +789,13 @@ ItemHead,DogHood,Dog Hood
 ItemHead,FoxyMask,Foxy Mask
 ItemHead,SleepMask,Sleep Mask
 ItemHead,BlackoutLenses,Blackout Lenses
+ItemHead,BunnyMask1,Bunny Mask 
+ItemHead,BunnyMask2,Bunny Mask 
+ItemHead,BunnyMask3,Bunny Mask 
+ItemHead,BunnyMask4,Bunny Mask 
+ItemHead,BunnyMask5,Bunny Mask 
+ItemHead,BunnyMask6,Bunny Mask 
+ItemHead,VeilTest,Veil Test
 ItemEars,,Ears
 ItemEars,LightDutyEarPlugs,Light Duty Ear Plugs
 ItemEars,HeavyDutyEarPlugs,Heavy Duty Ear Plugs
