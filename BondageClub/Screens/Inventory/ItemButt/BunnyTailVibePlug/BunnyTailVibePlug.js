@@ -3,7 +3,6 @@
 // Loads the item extension properties
 function InventoryItemButtBunnyTailVibePlug() {
 	if (DialogFocusItem.Property == null) DialogFocusItem.Property = { Intensity: -1 };
-	if (DialogFocusItem.Property.Intensity == null) DialogFocusItem.Property.Intensity = -1;
 }
 
 // Draw the item extension screen
@@ -48,5 +47,6 @@ function InventoryItemButtBunnyTailVibePlugSetIntensity(Modifier) {
 	if (DialogFocusItem.Property.Intensity == 3) DialogFocusItem.Property.Effect = ["Egged", "Vibrating"];	
 	CharacterLoadEffect(C);
 	if (C.ID == 0) ServerPlayerAppearanceSync();
+
 	ChatRoomPublishCustomAction("BunnyVibe" + ((Modifier > 0) ? "Increase" : "Decrease") + "To" + DialogFocusItem.Property.Intensity, true, [{Tag: "DestinationCharacterName", Text: C.Name, MemberNumber: C.MemberNumber}]);
 }
