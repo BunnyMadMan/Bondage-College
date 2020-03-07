@@ -930,3 +930,11 @@ ArmsChainSetBoxTie,,,SourceCharacter uses the chain on TargetCharacter to do a b
 ArmsChainSetHogtied,,,SourceCharacter uses the chain on TargetCharacter to do a hogtie.
 ArmsChainSetSuspensionHogtied,,,SourceCharacter uses the Chain on TargetCharacter to do a suspension hogtie.
 ArmsChainSetAllFours,,,SourceCharacter uses the Chain on TargetCharacter to have her crawling on all fours.
+BunnyTailVibePlugDecreaseTo-1,,,DestinationCharacterName vibrating bunny vibe stops vibrating.
+BunnyTailVibePlugDecreaseTo0,,,DestinationCharacterName vibrating bunny vibe slows down into a light tease.
+BunnyTailVibePlugDecreaseTo1,,,DestinationCharacterName vibrating bunny vibe returns to a moderate pace.
+BunnyTailVibePlugDecreaseTo2,,,DestinationCharacterName vibrating bunny vibe slows down a tiny bit.
+BunnyTailVibePlugIncreaseTo0,,,DestinationCharacterName vibrating bunny vibe starts teasing her lightly.
+BunnyTailVibePlugIncreaseTo1,,,DestinationCharacterName vibrating bunny vibe builds up to a moderate pace.
+BunnyTailVibePlugIncreaseTo2,,,DestinationCharacterName vibrating bunny vibe starts buzzing strongly!
+BunnyTailVibePlugIncreaseTo3,,,DestinationCharacterName vibrating bunny vibe jumps up to maximum intensity!
