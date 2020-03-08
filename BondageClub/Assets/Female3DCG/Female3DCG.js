@@ -465,7 +465,12 @@ var AssetFemale3DCG = [
 			{ Name: "WeddingVeil1", Priority: 4, Value: 30, BuyGroup: "WeddingVeil1"},
 			{ Name: "HairFeathers1", Value: 10, BuyGroup: "HairFeathers1"},
 			{ Name: "Veil1", Value: 1, BuyGroup: "Veil1"},
-			{ Name: "Veil2", Value: 1, BuyGroup: "Veil2"}
+			{ Name: "Veil2", Value: 1, BuyGroup: "Veil2"},
+			{ Name: "BunnyVeil2", Value: 1, BuyGroup: "BunnyVeil2"},
+			{ Name: "BunnyVeil3", Value: 1, BuyGroup: "BunnyVeil3"},
+			{ Name: "BunnyVeil4", Value: 1, BuyGroup: "BunnyVeil4"},
+			{ Name: "BunnyVeil5", Value: 1, BuyGroup: "BunnyVeil5"},
+
 		]
 	},
 	
@@ -1847,11 +1852,11 @@ var AssetFemale3DCG = [
 			{ Name: "BunnyMask1", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true, Priority: 45 },
 		    { Name: "BunnyMask2", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true, Priority: 45 },
 		    { Name: "BunnyMask3", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true, Priority: 45 },
-		    { Name: "BunnyMask4", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true },
-		    { Name: "BunnyMask5", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true },
-		    { Name: "BunnyMask6", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true },
-			{ Name: "Veil3", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true },
-			{ Name: "Veil4", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true }
+		    { Name: "BunnyMask4", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true, Priority: 45 },
+		    { Name: "BunnyMask5", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true, Priority: 45 },
+		    { Name: "BunnyMask6", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true, Priority: 45 },
+			{ Name: "Veil3", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true, Priority: 45 },
+			{ Name: "Veil4", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 1, Time: 15, AllowLock: true, Priority:45 }
 		]
 	},
 
