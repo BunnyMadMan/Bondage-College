@@ -1902,7 +1902,9 @@ var AssetFemale3DCG = [
 			{ Name: "MetalCuffsKey", Wear: false, Value: 20, Effect: ["Unlock-MetalCuffs"], Time: 5 },
 			{ Name: "WoodenMaidTray", Enable: false, Value: -1 },
 			{ Name: "WoodenMaidTrayFull", Enable: false, Value: -1 },
-			{ Name: "WoodenPaddle", Enable: false, Value: -1 }
+			{ Name: "WoodenPaddle", Enable: false, Value: -1 },
+			{ Name: "BunnyBasketCollar", Enable: false, Value: -1},
+			{ Name: "BunnyBasket", Enable: false, Value: -1}
 		]
 	},
 
