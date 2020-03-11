@@ -827,6 +827,8 @@ ItemMisc,BunnyBasketCollar,Bunny Basket Collar
 ItemMisc,BunnyBasket,Bunny Basket
 ItemMisc,BunnyBasketEmptyCollar,Bunny Basket Collar Empty
 ItemMisc,BunnyBasketEmpty,Bunny Basket Empty
+ItemMisc,DomBasketFull1,Dom Basket 1
+ItemMisc,DomBasketFull2,Dom Basket 2
 ItemDevices,,Body
 ItemDevices,WoodenBox,Wooden Box
 ItemDevices,SmallWoodenBox,Small Wooden Box
