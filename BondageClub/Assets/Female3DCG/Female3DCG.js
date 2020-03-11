@@ -1906,7 +1906,9 @@ var AssetFemale3DCG = [
 			{ Name: "BunnyBasketCollar", Enable: false, Value: -1 },
 			{ Name: "BunnyBasket", Enable: false, Value: -1 },
 			{ Name: "BunnyBasketEmptyCollar", Enable: false, Value: -1 },
-			{ Name: "BunnyBasketEmpty", Enable: false, Value: -1 }
+			{ Name: "BunnyBasketEmpty", Enable: false, Value: -1 },
+			{ Name: "DomBasketFull1", Enable: false, Value: -1 },
+			{ Name: "DomBasketFull2", Enable: false, Value: -1 }
 		]
 	},
 
