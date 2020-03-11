@@ -1903,8 +1903,10 @@ var AssetFemale3DCG = [
 			{ Name: "WoodenMaidTray", Enable: false, Value: -1 },
 			{ Name: "WoodenMaidTrayFull", Enable: false, Value: -1 },
 			{ Name: "WoodenPaddle", Enable: false, Value: -1 },
-			{ Name: "BunnyBasketCollar", Enable: false, Value: -1},
-			{ Name: "BunnyBasket", Enable: false, Value: -1}
+			{ Name: "BunnyBasketCollar", Enable: false, Value: -1 },
+			{ Name: "BunnyBasket", Enable: false, Value: -1 },
+			{ Name: "BunnyBasketEmptyCollar", Enable: false, Value: -1 },
+			{ Name: "BunnyBasketEmpty", Enable: false, Value: -1 }
 		]
 	},
 
