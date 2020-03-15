@@ -20,13 +20,13 @@ function InventoryItemButtEggVibePlugXXLDraw() {
 	if(DialogFocusItem.Property.Intensity > 1) DrawButton(1200, 710, 200, 55, DialogFind(Player, "Tease"), "White");
 	if(DialogFocusItem.Property.Intensity < 2) DrawButton(1550, 710, 200, 55, DialogFind(Player, "Low"), "White");
 	if(DialogFocusItem.Property.Intensity > 2) DrawButton(1550, 710, 200, 55, DialogFind(Player, "Low"), "White");
-    if(DialogFocusItem.Property.Intensity < 3) DrawButton(1375, 770, 200, 55, DialogFind(Player, "Medium"), "White");
-    if(DialogFocusItem.Property.Intensity > 3) DrawButton(1375, 770, 200, 55, DialogFind(Player, "Medium"), "White");
-    if(DialogFocusItem.Property.Intensity < 4) DrawButton(1, DialogFind(Player, "High"), "White");
-    if(DialogFocusItem.Property.Intensity > 4) DrawButton(1, DialogFind(Player, "High"), "White");
-    if(DialogFocusItem.Property.Intensity < 5) DrawButton(1, DialogFind(Player, "VeryHigh"), "White");
-    if(DialogFocusItem.Property.Intensity > 5) DrawButton(1, DialogFind(Player, "VeryHigh"), "White");
-    if(DialogFocusItem.Property.Intensity < 6) DrawButton(1, DialogFind(Player, "Maximum"), "White");
+    if(DialogFocusItem.Property.Intensity < 3) DrawButton(1200, 770, 200, 55, DialogFind(Player, "Medium"), "White");
+    if(DialogFocusItem.Property.Intensity > 3) DrawButton(1200, 770, 200, 55, DialogFind(Player, "Medium"), "White");
+    if(DialogFocusItem.Property.Intensity < 4) DrawButton(1550, 770, 200, 55, DialogFind(Player, "High"), "White");
+    if(DialogFocusItem.Property.Intensity > 4) DrawButton(1550, 770, 200, 55, DialogFind(Player, "High"), "White");
+    if(DialogFocusItem.Property.Intensity < 5) DrawButton(1200, 830, 200, 55, DialogFind(Player, "VeryHigh"), "White");
+    if(DialogFocusItem.Property.Intensity > 5) DrawButton(1200, 830, 200, 55, DialogFind(Player, "VeryHigh"), "White");
+    if(DialogFocusItem.Property.Intensity < 6) DrawButton(1550, 830, 200, 55, DialogFind(Player, "Maximum"), "White");
 }
 
 // Catches the item extension clicks
@@ -39,13 +39,13 @@ function InventoryItemButtEggVibePlugXXLClick() {
 	if ((MouseX >= 1200) && (MouseX <= 1400) && (MouseY >= 710) && (MouseY <= 765) && (DialogFocusItem.Property.Intensity > 1)) InventoryItemButtEggVibePlugXXLSetIntensity(1 - DialogFocusItem.Property.Intensity);
 	if ((MouseX >= 1550) && (MouseX <= 1750) && (MouseY >= 710) && (MouseY <= 765) && (DialogFocusItem.Property.Intensity < 2)) InventoryItemButtEggVibePlugXXLSetIntensity(2 - DialogFocusItem.Property.Intensity);
 	if ((MouseX >= 1550) && (MouseX <= 1750) && (MouseY >= 710) && (MouseY <= 765) && (DialogFocusItem.Property.Intensity > 2)) InventoryItemButtEggVibePlugXXLSetIntensity(2 - DialogFocusItem.Property.Intensity);
-    if ((MouseX >= 1375) && (MouseX <= 1575) && (MouseY >= 770) && (MouseY <= 825) && (DialogFocusItem.Property.Intensity < 3)) InventoryItemButtEggVibePlugXXLSetIntensity(3 - DialogFocusItem.Property.Intensity);
-    if ((MouseX >= 1375) && (MouseX <= 1575) && (MouseY >= 770) && (MouseY <= 825) && (DialogFocusItem.Property.Intensity > 3)) InventoryItemButtEggVibePlugXXLSetIntensity(3 - DialogFocusItem.Property.Intensity);
-    if ((MouseX >= 1375) && (MouseX <= 1575) && (MouseY >= 770) && (MouseY <= 825) && (DialogFocusItem.Property.Intensity < 4)) InventoryItemButtEggVibePlugXXLSetIntensity(4 - DialogFocusItem.Property.Intensity);
-    if ((MouseX >= 1375) && (MouseX <= 1575) && (MouseY >= 770) && (MouseY <= 825) && (DialogFocusItem.Property.Intensity > 4)) InventoryItemButtEggVibePlugXXLSetIntensity(4 - DialogFocusItem.Property.Intensity);
-    if ((MouseX >= 1375) && (MouseX <= 1575) && (MouseY >= 770) && (MouseY <= 825) && (DialogFocusItem.Property.Intensity > 5)) InventoryItemButtEggVibePlugXXLSetIntensity(5 - DialogFocusItem.Property.Intensity);
-    if ((MouseX >= 1375) && (MouseX <= 1575) && (MouseY >= 770) && (MouseY <= 825) && (DialogFocusItem.Property.Intensity < 5)) InventoryItemButtEggVibePlugXXLSetIntensity(5 - DialogFocusItem.Property.Intensity);
-    if ((MouseX >= 1375) && (MouseX <= 1575) && (MouseY >= 770) && (MouseY <= 825) && (DialogFocusItem.Property.Intensity < 6)) InventoryItemButtEggVibePlugXXLSetIntensity(6 - DialogFocusItem.Property.Intensity);
+    if ((MouseX >= 1200) && (MouseX <= 1400) && (MouseY >= 770) && (MouseY <= 825) && (DialogFocusItem.Property.Intensity < 3)) InventoryItemButtEggVibePlugXXLSetIntensity(3 - DialogFocusItem.Property.Intensity);
+    if ((MouseX >= 1200) && (MouseX <= 1400) && (MouseY >= 770) && (MouseY <= 825) && (DialogFocusItem.Property.Intensity > 3)) InventoryItemButtEggVibePlugXXLSetIntensity(3 - DialogFocusItem.Property.Intensity);
+    if ((MouseX >= 1550) && (MouseX <= 1750) && (MouseY >= 770) && (MouseY <= 825) && (DialogFocusItem.Property.Intensity < 4)) InventoryItemButtEggVibePlugXXLSetIntensity(4 - DialogFocusItem.Property.Intensity);
+    if ((MouseX >= 1550) && (MouseX <= 1750) && (MouseY >= 770) && (MouseY <= 825) && (DialogFocusItem.Property.Intensity > 4)) InventoryItemButtEggVibePlugXXLSetIntensity(4 - DialogFocusItem.Property.Intensity);
+    if ((MouseX >= 1200) && (MouseX <= 1400) && (MouseY >= 830) && (MouseY <= 885) && (DialogFocusItem.Property.Intensity > 5)) InventoryItemButtEggVibePlugXXLSetIntensity(5 - DialogFocusItem.Property.Intensity);
+    if ((MouseX >= 1200) && (MouseX <= 1400) && (MouseY >= 830) && (MouseY <= 885) && (DialogFocusItem.Property.Intensity < 5)) InventoryItemButtEggVibePlugXXLSetIntensity(5 - DialogFocusItem.Property.Intensity);
+    if ((MouseX >= 1550) && (MouseX <= 1750) && (MouseY >= 830) && (MouseY <= 885) && (DialogFocusItem.Property.Intensity < 6)) InventoryItemButtEggVibePlugXXLSetIntensity(6 - DialogFocusItem.Property.Intensity);
 }
 
 // Sets the bunny vibe plug intensity
