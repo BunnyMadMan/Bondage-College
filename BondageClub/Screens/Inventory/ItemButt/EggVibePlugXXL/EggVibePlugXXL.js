@@ -48,8 +48,8 @@ function InventoryItemButtEggVibePlugXXLClick() {
     if ((MouseX >= 1550) && (MouseX <= 1750) && (MouseY >= 830) && (MouseY <= 885) && (DialogFocusItem.Property.Intensity < 6)) InventoryItemButtEggVibePlugXXLSetIntensity(6 - DialogFocusItem.Property.Intensity);
 }
 
-// Sets the bunny vibe plug intensity
-function InventoryItemEggVibePlugXXLSetIntensity(Modifier) {
+// Sets the egg vibe plug intensity
+function InventoryItemButtEggVibePlugXXLSetIntensity(Modifier) {
 	var C = (Player.FocusGroup != null) ? Player : CurrentCharacter;
 	DialogFocusItem.Property.Intensity = DialogFocusItem.Property.Intensity + Modifier;
 	if (DialogFocusItem.Property.Intensity == -1) DialogFocusItem.Property.Effect = ["Egged"];
