@@ -830,12 +830,14 @@ ItemMisc,MetalCuffsKey,Metal Cuffs Key
 ItemMisc,WoodenMaidTray,Wooden Maid Tray
 ItemMisc,WoodenMaidTrayFull,Wooden Maid Tray Full
 ItemMisc,WoodenPaddle,Wooden Paddle
-ItemMisc,BunnyBasketCollar,Bunny Basket Collar
-ItemMisc,BunnyBasket,Bunny Basket
+ItemMisc,BunnyBasketEmptyCollar,Bunny Basket Empty Collar 
+ItemMisc,BunnyBasketEmpty,Bunny Basket Empty
 ItemMisc,BunnyBasketEmptyCollar,Bunny Basket Collar Empty
 ItemMisc,BunnyBasketEmpty,Bunny Basket Empty
 ItemMisc,DomBasketFull1,Dom Basket F1
 ItemMisc,DomBasketEmpty1,Dom Basket E1
+ItemMisc,BunnyBasketFull,Bunny Basket Full
+ItemMisc,BunnyBasketFullCollar,Bunny Basket Full Collar
 ItemDevices,,Body
 ItemDevices,WoodenBox,Wooden Box
 ItemDevices,SmallWoodenBox,Small Wooden Box
