@@ -19,6 +19,7 @@ function ServerInit() {
 	ServerSocket.on("ChatRoomCreateResponse", function (data) { ChatCreateResponse(data); });
 	ServerSocket.on("ChatRoomUpdateResponse", function (data) { ChatAdminResponse(data); });
 	ServerSocket.on("ChatRoomSync", function (data) { ChatRoomSync(data); });
+	ServerSocket.on("ChatRoomSyncSingle", function (data) { ChatRoomSyncSingle(data); });
 	ServerSocket.on("ChatRoomMessage", function (data) { ChatRoomMessage(data); });
 	ServerSocket.on("ChatRoomAllowItem", function (data) { ChatRoomAllowItem(data); });
 	ServerSocket.on("PasswordResetResponse", function (data) { PasswordResetResponse(data); });
@@ -239,6 +240,9 @@ function ServerValidateProperties(C, Item) {
 		if ((Item.Asset.AllowType == null) || (Item.Asset.AllowType.indexOf(Item.Property.Type) < 0))
 			delete Item.Property.Type;
 
+	// Remove impossible combinations
+	if ((Item.Property != null) && (Item.Property.Type == null) && (Item.Property.Restrain == null))
+		["SetPose", "Difficulty", "SelfUnlock", "Hide"].forEach(P => delete Item.Property[P]);
 }
 
 // Loads the appearance assets from a server bundle that only contains the main info (no assets)
