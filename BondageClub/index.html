@@ -14,6 +14,8 @@
 	<link rel="stylesheet" href="CSS/Styles.css">
 </head>
 
+<script src="Scripts/webgl/resources/m4.js"></script>
+<script src="Scripts/GLDraw.js"></script>
 <script src="Scripts/Common.js"></script>
 <script src="Scripts/Drawing.js"></script>
 <script src="Scripts/Timer.js"></script>
@@ -38,6 +40,7 @@
 <script src="Scripts/Translation.js"></script>
 <script src="Scripts/Activity.js"></script>
 <script src="Scripts/socket.io/socket.io.js"></script>
+<script src="Scripts/LZString.js"></script>
 <script src="Assets/Female3DCG/Female3DCG.js"></script>
 <script src="Screens/Character/Login/Login.js"></script>
 <script src="Screens/Character/Appearance/Appearance.js"></script>
@@ -99,6 +102,8 @@
 <script src="Screens/Online/ChatCreate/ChatCreate.js"></script>
 <script src="Screens/Online/ChatRoom/ChatRoom.js"></script>
 <script src="Screens/Online/ChatAdmin/ChatAdmin.js"></script>
+<script src="Screens/Online/Game/OnlineGame.js"></script>
+<script src="Screens/Online/GameLARP/GameLARP.js"></script>
 <script src="Screens/Inventory/ItemMouth/PumpGag/PumpGag.js"></script>
 <script src="Screens/Inventory/ItemVulva/VibratingEgg/VibratingEgg.js"></script>
 <script src="Screens/Inventory/ItemVulva/VibratingLatexPanties/VibratingLatexPanties.js"></script>
@@ -201,18 +206,47 @@
 	
 	BUG SENT - Both egg and vibrator could work on different variables - Demon tail + Clit&Dildo Vibrating belt + See-through + See-through zip catsuits (gatetrek)
 	BUG SENT - Use a device strap-on on a suspended girl, should be hidden (wildsj)
-	BUG - Vibrating wand shows over wedding dress
 	
 	OK - Seam & Opacity fixes for suits (Atasly)
 	OK - Fixes for the All-Four position (Gatetrek)
 	OK - Admiral suit & Crotch chain fixes (Kirsty)
 	OK - Gloves & Taped Hands fixes (CthulhuDancing)
-
 	OK - Validate improper item properties (Sekkmer)
 	OK - New button to clear all expressions (Sekkmer)
 	OK - HobbleSkirt fixes & lots of assets priority fixes (Atasly)
-	OK - Remove collar accessory with collar in kidnap mini-game (elliesec)
-			
+	OK - Remove collar accessory with collar in kidnap mini-game (elliesec)	
+	OK - Remove the TailStrap physical zone (Sekkmer)
+	OK - New setting to only play sound if the player is involved (Atasly)
+	OK - Chat room entry/leave room refresh correction (Sekkmer)
+	OK - Yes, average speed is now faster - Optimization for DrawGL (Sekkmer)	
+	OK - Typo fixes in Magic Theater (elliesec)
+	OK - Gag swap bug fix (elliesec)
+	OK - VibeHeart fixes, Pony fixes, Lover Key can unlock everything but owner locked items (Atasly)
+	OK - Two new ties with Arms Hemp Rope & Chains (Nina-1474)
+	OK - Collar restraint removal in kidnap (elliesec)
+	OK - Mouth stuffing color (Nina-1474)
+	OK - Collar/Prone/Catsuit/Text fixes (Atasly)
+	OK - Many new locking piercings (Atasly)
+	OK - Improved photo room (git4nick)
+	OK - Rope cuffs / Rope Wrist Elbow Harness Tie / Chain cuffs position (Ayesha-678)
+	OK - Priority property for item clipping (Nina-1474)
+	OK - Sock Stuffing gag (Nina-1474)
+	OK - Nine new backgrounds (Aldarris & EmilyFox)
+	OK - Activity typo fixes (elliesec)
+	OK - Full mummy tape adjustments (fleisch11)
+
+	OK - Fix for Latex Suit, Slave Collar Update, Expression Dialog (Atasly)
+	OK - New Wooden Stocks (Kirsty)
+	OK - Fix for Magic Theater gag slots (Nina-1474)
+	OK - Hemp Rope Harness - New menu & Two new ties (Ayesha-678)
+	OK - New dice mechanics in Gamblng Hall (git4nick)
+	OK - Become a police / bad girl for Prison, Gambling Hall & Stable (git4nick)	
+	
+	OK - Remove server whisper block on blacklist.
+	OK - Adding someone to your ghostlist will also add it to your blacklist.  
+	TO DO - Use LZString to Compress wardrobe data, when ready for release
+	TO DO - Comment Inventory.js for JS Documentation / setup VS Code
+	
 IN PROGRESS - Build a new room with an NPC to explain how the LARP system and Bondage Battles works:
 -	Every girl must follow the LARP rules and play fair.  When they lose a battle, they need to submit and go along with it.
 -	Every girl needs to select a class to play in the LARP.  Each class can use the strip and restrain abilities and has three special abilities that can be used only once per battle, listed below.

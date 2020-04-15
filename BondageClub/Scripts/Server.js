@@ -22,6 +22,7 @@ function ServerInit() {
 	ServerSocket.on("ChatRoomSyncSingle", function (data) { ChatRoomSyncSingle(data); });
 	ServerSocket.on("ChatRoomMessage", function (data) { ChatRoomMessage(data); });
 	ServerSocket.on("ChatRoomAllowItem", function (data) { ChatRoomAllowItem(data); });
+	ServerSocket.on("ChatRoomGameResponse", function (data) { ChatRoomGameResponse(data); });
 	ServerSocket.on("PasswordResetResponse", function (data) { PasswordResetResponse(data); });
 	ServerSocket.on("AccountQueryResult", function (data) { ServerAccountQueryResult(data); });
 	ServerSocket.on("AccountBeep", function (data) { ServerAccountBeep(data); });
@@ -45,6 +46,7 @@ function ServerDisconnect(data) {
 			if (
 				(CurrentScreen == "ChatRoom")
 				|| (CurrentScreen == "ChatAdmin")
+				|| (CurrentScreen == "GameLARP")
 				|| ((CurrentScreen == "Appearance") && (CharacterAppearanceReturnRoom == "ChatRoom"))
 				|| ((CurrentScreen == "InformationSheet") && (InformationSheetPreviousScreen == "ChatRoom"))
 				|| ((CurrentScreen == "Title") && (InformationSheetPreviousScreen == "ChatRoom"))
@@ -320,7 +322,7 @@ function ServerAppearanceLoadFromBundle(C, AssetFamily, Bundle, SourceMemberNumb
 	for (var A = 0; A < Bundle.length; A++) {
 
 		// Skip blocked items
-		if (InventoryIsPermissionBlocked(C, Bundle[A].Name, Bundle[A].Group)) continue;
+		if (InventoryIsPermissionBlocked(C, Bundle[A].Name, Bundle[A].Group) && OnlineGameAllowBlockItems()) continue;
 
 		// Cycles in all assets to find the correct item to add (do not add )
 		for (var I = 0; I < Asset.length; I++)
@@ -406,7 +408,7 @@ function ServerAppearanceLoadFromBundle(C, AssetFamily, Bundle, SourceMemberNumb
 function ServerPlayerAppearanceSync() {
 
 	// Creates a big parameter string of every appearance items and sends it to the server
-	if ((Player.AccountName != "") && (CurrentScreen != "Photographic")) {
+	if (Player.AccountName != "") {
 		var D = {};
 		D.AssetFamily = Player.AssetFamily;
 		D.Appearance = ServerAppearanceBundle(Player.Appearance);
