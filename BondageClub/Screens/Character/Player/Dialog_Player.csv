@@ -771,9 +771,12 @@ BitchSuitTypeUnZip,,,Unzipped
 BitchSuitSetZipped,,,SourceCharacter zips up TargetCharacter suit.
 BitchSuitSetUnZip,,,SourceCharacter unzips TargetCharacter suit.
 TurnOff,,,TurnOff
+MildTease,,,Mild Tease
+Tease,,,Tease
 Low,,,Low
 Medium,,,Medium
 High,,,High
+VeryHigh,,,Very High
 Maximum,,,Maximum
 TriggerShock,,,Trigger Shock
 MittenChain,,,SourceCharacter chains DestinationCharacter mittens to the baby harness.
