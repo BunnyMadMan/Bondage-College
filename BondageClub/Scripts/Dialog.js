@@ -86,11 +86,13 @@ function DialogPrerequisite(D) {
 
 // Searches for an item in the player inventory to unlock a specific item
 function DialogCanUnlock(C, Item) {
+	if ((C.ID != 0) && !Player.CanInteract()) return false;
 	if ((Item != null) && (Item.Asset != null) && (Item.Asset.OwnerOnly == true)) return Item.Asset.Enable && C.IsOwnedByPlayer();
 	if ((Item != null) && (Item.Asset != null) && (Item.Asset.LoverOnly == true)) return Item.Asset.Enable && C.IsLoverOfPlayer();
 	if ((Item != null) && (Item.Asset != null) && (Item.Asset.SelfUnlock != null) && (Item.Asset.SelfUnlock == false) && !Player.CanInteract()) return false;
 	if ((Item != null) && (Item.Property != null) && (Item.Property.SelfUnlock != null) && (Item.Property.SelfUnlock == false) && !Player.CanInteract()) return false;
 	if (C.IsOwnedByPlayer() && InventoryAvailable(Player, "OwnerPadlockKey", "ItemMisc") && Item.Asset.Enable) return true;
+	if (C.IsLoverOfPlayer() && InventoryAvailable(Player, "LoversPadlockKey", "ItemMisc") && Item.Asset.Enable && Item.Property && !Item.Property.LockedBy.startsWith("Owner")) return true;
 	var UnlockName = "Unlock-" + Item.Asset.Name;
 	if ((Item != null) && (Item.Property != null) && (Item.Property.LockedBy != null)) UnlockName = "Unlock-" + Item.Property.LockedBy;
 	for (var I = 0; I < Player.Inventory.length; I++)
@@ -215,6 +217,11 @@ function DialogInventoryAdd(C, NewInv, NewInvWorn) {
 
 }
 
+// Some special screens can always allow you to put on new restraints
+function DialogAlwaysAllowRestraint() {
+	return (CurrentScreen == "Photographic");
+}
+
 // Build the buttons in the top menu
 function DialogMenuButtonBuild(C) {
 
@@ -246,8 +253,8 @@ function DialogMenuButtonBuild(C) {
 		if ((Item != null) && !IsItemLocked && InventoryItemHasEffect(Item, "Mounted", true) && Player.CanInteract() && InventoryAllow(C, Item.Asset.Prerequisite) && !IsGroupBlocked) DialogMenuButton.push("Dismount");
 		if ((Item != null) && !IsItemLocked && InventoryItemHasEffect(Item, "Enclose", true) && Player.CanInteract() && InventoryAllow(C, Item.Asset.Prerequisite) && !IsGroupBlocked) DialogMenuButton.push("Escape");
 		if (InventoryItemHasEffect(Item, "Egged") && InventoryAvailable(Player, "VibratorRemote", "ItemVulva") && Player.CanInteract() && !(LogQuery("BlockRemoteSelf", "OwnerRule") && (C.ID == 0))) DialogMenuButton.push("Remote");
-		if ((Item != null) && Item.Asset.Extended && Player.CanInteract() && !IsGroupBlocked && (!Item.Asset.OwnerOnly || (C.IsOwnedByPlayer())) && (!Item.Asset.LoverOnly || (C.IsLoverOfPlayer()))) DialogMenuButton.push("Use");
-		if (Player.CanInteract()) DialogMenuButton.push("ColorPick");
+		if ((Item != null) && Item.Asset.Extended && ((Player.CanInteract()) || DialogAlwaysAllowRestraint()) && !IsGroupBlocked && (!Item.Asset.OwnerOnly || (C.IsOwnedByPlayer())) && (!Item.Asset.LoverOnly || (C.IsLoverOfPlayer()))) DialogMenuButton.push("Use");
+		if ((Player.CanInteract()) || DialogAlwaysAllowRestraint()) DialogMenuButton.push("ColorPick");
 
 		// Make sure the target player zone is allowed for an activity
 		if ((C.FocusGroup.Activity != null) && !IsGroupBlocked && ActivityAllowed() && (C.ArousalSettings != null) && (C.ArousalSettings.Zone != null) && (C.ArousalSettings.Active != null) && (C.ArousalSettings.Active != "Inactive"))
@@ -328,7 +335,7 @@ function DialogFacialExpressionsBuild() {
 		Item.MenuExpression1 = (Index < 0) ? ExpressionList[ExpressionList.length - 1] : (Index == 0) ? null : ExpressionList[Index - 1];
 		Item.MenuExpression2 = Item.CurrentExpression;
 		Item.MenuExpression3 = (Index < 0) ? ExpressionList[0] : (Index == ExpressionList.length - 1) ? null : ExpressionList[Index + 1];
-		Item.MenuExpression4 = (Index < 0) ? ExpressionList[1] : (Index == ExpressionList.length - 2) ? null : ExpressionList[Index + 2];
+		Item.MenuExpression4 = (Index < 0) ? ExpressionList[1] : (Index == ExpressionList.length - 2) ? null : ExpressionList[(Index + 2) % (ExpressionList.length + 1)];
 		DialogFacialExpressions.push(Item);
 	}
 	// Temporary (?) solution to make the facial elements appear in a more logical order, as their alphabetical order currently happens to match up
@@ -466,6 +473,9 @@ function DialogMenuButtonClick() {
 
 			// Exit Icon - Go back to the character dialog
 			if (DialogMenuButton[I] == "Exit") {
+				// May need to reset the character back to the normal position if they have been moved up
+				if (CurrentCharacter.HeightModifier == 0) CharacterSetHeightModifier(CurrentCharacter);
+
 				DialogLeaveItemMenu();
 				return;
 			}
@@ -702,7 +712,7 @@ function DialogItemClick(ClickItem) {
 						// Prevent two unique gags being equipped. Also check if selfbondage is allowed for the item if used on self
 						if (ClickItem.Asset.Prerequisite == "GagUnique" && C.Pose.indexOf("GagUnique") >= 0) DialogSetText("CanOnlyEquipOneOfThisGag");
 						else if (ClickItem.Asset.Prerequisite == "GagCorset" && C.Pose.indexOf("GagCorset") >= 0) DialogSetText("CannotUseMultipleCorsetGags");
-						else if (ClickItem.Asset.SelfBondage || (C.ID != 0)) DialogProgressStart(C, CurrentItem, ClickItem);
+						else if (ClickItem.Asset.SelfBondage || (C.ID != 0) || DialogAlwaysAllowRestraint()) DialogProgressStart(C, CurrentItem, ClickItem);
 						else DialogSetText("CannotUseOnSelf");
 
 					} else {
@@ -739,6 +749,12 @@ function DialogItemClick(ClickItem) {
 // When the user clicks on a dialog option
 function DialogClick() {
 
+	// If the user clicked the Up button, move the character up to the top of the screen
+	if ((CurrentCharacter.HeightModifier < -90) && (MouseX >= 510) && (MouseX < 600) && (MouseY >= 25) && (MouseY < 115)) {
+		CurrentCharacter.HeightModifier = 0;
+		return;
+	}
+
 	// If the user clicked on the interaction character or herself, we check to build the item menu
 	if ((CurrentCharacter.AllowItem || (MouseX < 500)) && (MouseX >= 0) && (MouseX <= 1000) && (MouseY >= 0) && (MouseY < 1000) && ((CurrentCharacter.ID != 0) || (MouseX > 500)) && (DialogIntro() != "")) {
 		DialogLeaveItemMenu();
@@ -774,6 +790,9 @@ function DialogClick() {
 				// If this specific activity is clicked, we run it
 				if ((MouseX >= X) && (MouseX < X + 225) && (MouseY >= Y) && (MouseY < Y + 275)) {
 					ActivityRun((Player.FocusGroup != null) ? Player : CurrentCharacter, DialogActivity[A]);
+
+					// May need to reset the character back to the normal position if they have been moved up
+					if (CurrentCharacter.HeightModifier == 0) CharacterSetHeightModifier(CurrentCharacter);
 					return;
 				}
 
@@ -1155,6 +1174,11 @@ function DialogDraw() {
 		} else {
 			if (DialogActivityMode) DialogDrawActivityMenu((Player.FocusGroup != null) ? Player : CurrentCharacter);
 			else DialogDrawItemMenu((Player.FocusGroup != null) ? Player : CurrentCharacter);
+		}
+
+		// Draw the 'Up' reposition button if some zones are offscreen
+		if (CurrentCharacter != null && CurrentCharacter.HeightModifier != null && CurrentCharacter.HeightModifier < -90) {
+			DrawButton(510, 25, 90, 90, "", "White", "Icons/Up.png", DialogFind(Player, "UpPosition"));
 		}
 
 	} else {

@@ -191,7 +191,10 @@ function CharacterAppearanceSort(AP) {
 	var Arr = [];
 	for (var P = 0; P < 50; P++)
 		for (var A = 0; A < AP.length; A++)
-			if (AP[A].Asset.DrawingPriority != null) {
+			if (AP[A].Property != null && AP[A].Property.OverridePriority != null) {
+				if (AP[A].Property.OverridePriority == P)
+					Arr.push(AP[A]);
+			} else if (AP[A].Asset.DrawingPriority != null) {
 				if (AP[A].Asset.DrawingPriority == P)
 					Arr.push(AP[A]);
 			} else
@@ -214,6 +217,20 @@ function CharacterAppearanceVisible(C, AssetName, GroupName) {
 					if ((Pose[P].Hide != null) && (Pose[P].Hide.indexOf(GroupName) >= 0))
 						return false;
 	return true;
+}
+
+function CharacterSetHeightModifier(C) {
+	var Height = 0;
+	for (var A = 0; A < C.Appearance.length; A++)
+		if (CharacterAppearanceVisible(C, C.Appearance[A].Asset.Name, C.Appearance[A].Asset.Group.Name))
+			Height += C.Appearance[A].Asset.HeightModifier;
+	if (C.Pose != null)
+		for (var A = 0; A < C.Pose.length; A++)
+			for (var P = 0; P < Pose.length; P++)
+				if (Pose[P].Name == C.Pose[A])
+					if (Pose[P].OverrideHeight != null)
+						Height = Pose[P].OverrideHeight;
+	C.HeightModifier = Height;
 }
 
 // Gets the character
