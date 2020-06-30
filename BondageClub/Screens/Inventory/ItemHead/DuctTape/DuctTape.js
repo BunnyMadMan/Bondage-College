@@ -54,13 +54,12 @@ function InventoryItemHeadDuctTapeSetType(NewType) {
 	}
 	else if (NewType == "Mummy") {
         DialogFocusItem.Property.Hide = ["HairFront", "HairBack"];
-	    DialogFocusItem.Property.Effect = ["GagNormal", "BlindNormal", "Prone"];
+	    DialogFocusItem.Property.Effect = ["GagNormal", "BlindNormal", "Prone", "BlockMouth"];
 		DialogFocusItem.Property.Block = ["ItemMouth", "ItemMouth2", "ItemMouth3", "ItemEars"];
 	}
 
+	// Update the character and chatroom
 	CharacterRefresh(C);
-	ChatRoomCharacterUpdate(C);
-
 	var msg = "DuctTapeHeadSet" + ((NewType) ? NewType : "Double");
 	var Dictionary = [];
 	Dictionary.push({Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber});

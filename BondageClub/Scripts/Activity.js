@@ -60,7 +60,7 @@ function ActivityDialogBuild(C) {
 
 			// Make sure the activity is valid for that player asset family
 			var Activity = AssetGetActivity(C.AssetFamily, C.FocusGroup.Activity[A]);
-			if (Activity != null) {
+			if (Activity != null && Activity.Name.indexOf("Item") < 0) {
 
 				// If the player is targeting herself, we validate that this activity can be done on self
 				var Allow = true;
@@ -69,13 +69,16 @@ function ActivityDialogBuild(C) {
 				// Make sure all the prerequisites are met
 				if (Allow && (Activity.Prerequisite != null))
 					for (var P = 0; P < Activity.Prerequisite.length; P++) {
-						if ((Activity.Prerequisite[P] == "UseMouth") && !Player.CanTalk()) Allow = false;
-						if ((Activity.Prerequisite[P] == "UseHands") && !Player.CanInteract()) Allow = false;
-						if ((Activity.Prerequisite[P] == "UseFeet") && !Player.CanWalk()) Allow = false;
-						if ((Activity.Prerequisite[P] == "ZoneNaked") && ((C.FocusGroup.Name == "ItemButt") || (C.FocusGroup.Name == "ItemVulva")) && ((InventoryPrerequisiteMessage(C, "AccessVulva") != "") || C.IsVulvaChaste())) Allow = false;
-						if ((Activity.Prerequisite[P] == "ZoneNaked") && ((C.FocusGroup.Name == "ItemBreast") || (C.FocusGroup.Name == "ItemNipples")) && ((InventoryPrerequisiteMessage(C, "AccessBreast") != "") || C.IsBreastChaste())) Allow = false;
-						if ((Activity.Prerequisite[P] == "ZoneNaked") && (C.FocusGroup.Name == "ItemBoots") && (InventoryPrerequisiteMessage(C, "NakedFeet") != "")) Allow = false;
-						if ((Activity.Prerequisite[P] == "ZoneNaked") && (C.FocusGroup.Name == "ItemHands") && (InventoryPrerequisiteMessage(C, "NakedHands") != "")) Allow = false;
+						if ((Activity.Prerequisite[P] == "UseMouth") && (Player.IsMouthBlocked() || !Player.CanTalk())) Allow = false;
+						else if ((Activity.Prerequisite[P] == "UseTongue") && Player.IsMouthBlocked()) Allow = false;
+						else if ((Activity.Prerequisite[P] == "UseHands") && !Player.CanInteract()) Allow = false;
+						else if ((Activity.Prerequisite[P] == "UseFeet") && !Player.CanWalk()) Allow = false;
+						else if ((Activity.Prerequisite[P] == "TargetCanUseTongue") && C.IsMouthBlocked()) Allow = false;
+						else if ((Activity.Prerequisite[P] == "ZoneNaked") && (C.FocusGroup.Name == "ItemButt") && ((InventoryPrerequisiteMessage(C, "AccessButt") != "") || C.IsPlugged())) Allow = false;
+						else if ((Activity.Prerequisite[P] == "ZoneNaked") && (C.FocusGroup.Name == "ItemVulva") && ((InventoryPrerequisiteMessage(C, "AccessVulva") != "") || C.IsVulvaChaste())) Allow = false;
+						else if ((Activity.Prerequisite[P] == "ZoneNaked") && ((C.FocusGroup.Name == "ItemBreast") || (C.FocusGroup.Name == "ItemNipples")) && ((InventoryPrerequisiteMessage(C, "AccessBreast") != "") || C.IsBreastChaste())) Allow = false;
+						else if ((Activity.Prerequisite[P] == "ZoneNaked") && (C.FocusGroup.Name == "ItemBoots") && (InventoryPrerequisiteMessage(C, "NakedFeet") != "")) Allow = false;
+						else if ((Activity.Prerequisite[P] == "ZoneNaked") && (C.FocusGroup.Name == "ItemHands") && (InventoryPrerequisiteMessage(C, "NakedHands") != "")) Allow = false;
 					}
 
 				// Make sure the current player has permission to do this activity
@@ -117,6 +120,12 @@ function ActivityEffect(S, C, A, Z) {
 
 }
 
+// Syncs the player arousal with everyone in chatroom
+function ActivityChatRoomArousalSync(C) {
+	if ((C.ID == 0) && (CurrentScreen == "ChatRoom"))
+		ServerSend("ChatRoomCharacterArousalUpdate", { OrgasmTimer: C.ArousalSettings.OrgasmTimer, Progress: C.ArousalSettings.Progress, ProgressTimer: C.ArousalSettings.ProgressTimer });
+}
+
 // Sets the character arousal level and validates the value
 function ActivitySetArousal(C, Progress) {
 	if ((C.ArousalSettings.Progress == null) || (typeof C.ArousalSettings.Progress !== "number") || isNaN(C.ArousalSettings.Progress)) C.ArousalSettings.Progress = 0;
@@ -126,8 +135,7 @@ function ActivitySetArousal(C, Progress) {
 	if (C.ArousalSettings.Progress != Progress) {
 		C.ArousalSettings.Progress = Progress;
 		C.ArousalSettings.ProgressTimer = 0;
-		if ((C.ID == 0) && (CurrentScreen == "ChatRoom"))
-			ChatRoomCharacterUpdate(Player);
+		ActivityChatRoomArousalSync(C);
 	}
 }
 
@@ -149,8 +157,7 @@ function ActivitySetArousalTimer(C, Activity, Zone, Progress) {
 	// If we must apply a progress timer change, we publish it
 	if ((C.ArousalSettings.ProgressTimer == null) || (C.ArousalSettings.ProgressTimer != Progress)) {
 		C.ArousalSettings.ProgressTimer = Progress;
-		if ((C.ID == 0) && (CurrentScreen == "ChatRoom"))
-			ChatRoomCharacterUpdate(Player);
+		ActivityChatRoomArousalSync(C);
 	}
 
 }
@@ -185,7 +192,7 @@ function ActivityOrgasmStart(C) {
 			var Dictionary = [];
 			Dictionary.push({Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber});
 			ServerSend("ChatRoomChat", {Content: "Orgasm" + (Math.floor(Math.random() * 10)).toString(), Type: "Activity", Dictionary: Dictionary});
-			ChatRoomCharacterUpdate(Player);
+			ActivityChatRoomArousalSync(C);
 		}
 	}
 }
@@ -198,7 +205,7 @@ function ActivityOrgasmStop(C, Progress) {
 		C.ArousalSettings.OrgasmStage = 0;
 		ActivitySetArousal(C, Progress);
 		ActivityTimerProgress(C, 0);
-		if (C.ID == 0) ChatRoomCharacterUpdate(Player);
+		ActivityChatRoomArousalSync(C);
 	}
 }
 
@@ -240,14 +247,11 @@ function ActivityOrgasmPrepare(C) {
 		C.ArousalSettings.OrgasmStage = (C.ID == 0) ? 0 : 2;
 		if (C.ID == 0) ActivityOrgasmGameTimer = C.ArousalSettings.OrgasmTimer - CurrentTime;
 		if ((CurrentCharacter != null) && ((C.ID == 0) || (CurrentCharacter.ID == C.ID))) DialogLeave();
-
-		// Sends the orgasm preparation to the chatroom, the bar turns pink
-		if ((C.ID == 0) && (CurrentScreen == "ChatRoom"))
-			ChatRoomCharacterUpdate(Player);
+		ActivityChatRoomArousalSync(C);
 
 		// If an NPC orgasmed, it will raise her love based on the horny trait
 		if ((C.AccountName.substring(0, 4) == "NPC_") || (C.AccountName.substring(0, 4) == "NPC-"))
-			if ((C.Love == null) || (C.Love < 60) || (C.IsOwner()) || (C.IsOwnedByPlayer()) || C.IsLover())
+			if ((C.Love == null) || (C.Love < 60) || (C.IsOwner()) || (C.IsOwnedByPlayer()) || C.IsLoverPrivate())
 				NPCLoveChange(C, Math.floor((NPCTraitGet(C, "Horny") + 100) / 20) + 1);
 
 	}
@@ -292,7 +296,7 @@ function ActivityExpression(C, Progress) {
 	}
 
 	// Refreshes the character
-	CharacterRefresh(C);
+	CharacterRefresh(C, false);
 
 }
 
@@ -353,21 +357,13 @@ function ActivityRun(C, Activity) {
 
 }
 
-// Some items such as vibrating wands and spanking toys can trigger arousal both the source and target character
+// Some items such as vibrating wands and spanking toys can trigger arousal for both the source and target character
 function ActivityArousalItem(Source, Target, Asset) {
-	if (Asset.Activity != null) {
-		var Activity = AssetGetActivity(Target.AssetFamily, Asset.Activity);
+	var AssetActivity = Asset.DynamicActivity(Source);
+	if (AssetActivity != null) {
+		var Activity = AssetGetActivity(Target.AssetFamily, AssetActivity);
 		if ((Source.ID == 0) && (Target.ID != 0)) ActivityRunSelf(Source, Target, Activity);
-		if ((Target.ArousalSettings != null) && ((Target.ArousalSettings.Active == "Hybrid") || (Target.ArousalSettings.Active == "Automatic"))) {
-			if ((Target.ID == 0) || (Target.AccountName.substring(0, 4) == "NPC_") || (Target.AccountName.substring(0, 4) == "NPC-")) ActivityEffect(Source, Target, Asset.Activity, Asset.Group.Name);
-			if ((Target.ID != 0) && (CurrentScreen == "ChatRoom")) {
-				var Dictionary = [];
-				Dictionary.push({Tag: "SourceCharacter", Text: Source.Name, MemberNumber: Source.MemberNumber});
-				Dictionary.push({Tag: "TargetCharacter", Text: Target.Name, MemberNumber: Target.MemberNumber});
-				Dictionary.push({Tag: "ActivityGroup", Text: Asset.Group.Name});
-				Dictionary.push({Tag: "ActivityName", Text: Activity.Name});
-				ServerSend("ChatRoomChat", {Content: "ChatOther-" + Asset.Group.Name + "-" + Activity.Name, Type: "Activity", Dictionary: Dictionary});
-			}
-		}
+		if (((Target.ArousalSettings != null) && ((Target.ArousalSettings.Active == "Hybrid") || (Target.ArousalSettings.Active == "Automatic"))) && ((Target.ID == 0) || (Target.AccountName.substring(0, 4) == "NPC_") || (Target.AccountName.substring(0, 4) == "NPC-")))
+			ActivityEffect(Source, Target, AssetActivity, Asset.Group.Name);
 	}
 }
