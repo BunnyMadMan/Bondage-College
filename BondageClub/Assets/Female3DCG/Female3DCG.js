@@ -635,6 +635,13 @@ var AssetFemale3DCG = [
 			{ Name: "ButterflyMask", Value: 30, HideItem: ["ItemHeadNoseRing"] },
 			{ Name: "ShinobiMask", Value: 30, Left: 199, Top: 88, HideItem: ["ItemHeadNoseRing"] },
 			{ Name: "FoxMask", Value: 30, Left: 150, Top: 20, HideItem: ["ItemHeadNoseRing"] }],
+			{ Name: "BunnyMask1", Value: 30, Left: 150, Top: 20, HideItem: ["ItemHeadNoseRing"] }],
+			{ Name: "BunnyMask2", Value: 1, Left: 150, Top: 20, HideItem: ["ItemHeadNoseRing"] }],
+			{ Name: "BunnyMask3", Value: 1, Left: 150, Top: 20, HideItem: ["ItemHeadNoseRing"] }],
+			{ Name: "BunnyMask4", Value: 1, Left: 150, Top: 20, HideItem: ["ItemHeadNoseRing"] }],
+			{ Name: "BunnyMask5", Value: 1, Left: 150, Top: 20, HideItem: ["ItemHeadNoseRing"] }],
+			{ Name: "BunnyMask6", Value: 1, Left: 150, Top: 20, HideItem: ["ItemHeadNoseRing"] }],
+			
 		Color: ["#303030", "#808080", "#e0e0e0", "#aa8080", "#80aa80", "#8080aa", "#aaaa80", "#80aaaa", "#aa80aa", "#cc3333", "#33cc33", "#3333cc", "#cccc33", "#33cccc", "#cc33cc"],
 	},
 
