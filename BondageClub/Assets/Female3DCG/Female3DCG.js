@@ -488,7 +488,8 @@ var AssetFemale3DCG = [
 			{ Name: "Crown4", Value: 20 },
 			{ Name: "Crown5", Value: 20 },
 			{ Name: "Veil1", Value: 1 },
-			{ Name: "Veil2", Value: 1 }
+			{ Name: "Veil2", Value: 1 },
+			{ Name: "Veil3", Value: 1 }
 		],
 		Color: ["Default", "#202020", "#808080", "#bbbbbb", "#aa8080", "#80aa80", "#8080aa", "#aaaa80", "#80aaaa", "#aa80aa", "#cc3333", "#33cc33", "#3333cc", "#cccc33", "#33cccc", "#cc33cc"]
 	},
@@ -642,7 +643,10 @@ var AssetFemale3DCG = [
 			{ Name: "BunnyMask3", Value: 3, Left: 150, Top: 20, Priority: 48, HideItem: ["ItemHeadNoseRing"] },
 			{ Name: "BunnyMask4", Value: 4, Left: 150, Top: 20, Priority: 48, HideItem: ["ItemHeadNoseRing"] },
 			{ Name: "BunnyMask5", Value: 5, Left: 150, Top: 20, Priority: 48, HideItem: ["ItemHeadNoseRing"] },
-			{ Name: "BunnyMask6", Value: 6, Left: 150, Top: 20, Priority: 48, HideItem: ["ItemHeadNoseRing"] },],
+			{ Name: "BunnyMask6", Value: 6, Left: 150, Top: 20, Priority: 48, HideItem: ["ItemHeadNoseRing"] },
+			{ Name: "KittyMask1", Value: 1, Left: 150, Top: 20, Priority: 48, HideItem: ["ItemHeadNoseRing"] },
+			{ Name: "KittyMask2", Value: 1, Left: 150, Top: 20, Priority: 48, HideItem: ["ItemHeadNoseRing"] },
+			{ Name: "KittyMask3", Value: 1, Left: 150, Top: 20, Priority: 48, HideItem: ["ItemHeadNoseRing"] }],
 		Color: ["#303030", "#808080", "#e0e0e0", "#aa8080", "#80aa80", "#8080aa", "#aaaa80", "#80aaaa", "#aa80aa", "#cc3333", "#33cc33", "#3333cc", "#cccc33", "#33cccc", "#cc33cc"],
 	},
 
