@@ -225,6 +225,7 @@ Hat,Crown5,Crown Style 5
 Hat,Veil1,Veil 1
 Hat,Veil2,Veil 2
 Hat,Veil3,Veil 3
+Hat,KittyHat,Kitty Hat
 HairAccessory1,,Hair Accessory
 HairAccessory1,Ears1,Ears Small
 HairAccessory1,Ears2,Ears Large
@@ -320,9 +321,13 @@ Mask,BunnyMask3,Bunny Mask 3
 Mask,BunnyMask4,Bunny Mask 4
 Mask,BunnyMask5,Bunny Mask 5
 Mask,BunnyMask6,Bunny Mask 6
+Mask,BunnyMask7,Bunny Mask 7
 Mask,KittyMask1,Kitty Mask 1
 Mask,KittyMask2,Kitty Mask 2
 Mask,KittyMask3,Kitty Mask 3
+Mask,KittyMask4,Kitty Mask 4
+Mask,LaceMask1,Lace Mask 1
+Mask,LaceMask2,Lace Mask 2
 TailStraps,,Tail Strap
 TailStraps,TailStrap,Kitty Tail Strap
 TailStraps,HorseTailStrap,Horse Tail Strap
