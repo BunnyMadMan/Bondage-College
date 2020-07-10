@@ -1,7 +1,7 @@
 "use strict";
 
 // Loads the item extension properties
-function InventoryItemEggVibePlugXXLLoad() {
+function InventoryItemButtEggVibePlugXXLLoad() {
 	if (DialogFocusItem.Property == null) DialogFocusItem.Property = { Intensity: -1 };
 }
 
@@ -37,7 +37,7 @@ function InventoryItemButtEggVibePlugXXLClick() {
 }
 
 // Sets the bunny vibe plug intensity
-function InventoryItemEggVibePlugXXLSetIntensity(Modifier) {
+function InventoryItemButtEggVibePlugXXLSetIntensity(Modifier) {
 	var C = (Player.FocusGroup != null) ? Player : CurrentCharacter;
 	DialogFocusItem.Property.Intensity = DialogFocusItem.Property.Intensity + Modifier;
 	if (DialogFocusItem.Property.Intensity == -1) DialogFocusItem.Property.Effect = ["Egged"];
