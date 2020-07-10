@@ -36,7 +36,7 @@ function InventoryItemButtEggVibePlugXXLClick() {
 	if ((MouseX >= 1375) && (MouseX <= 1575) && (MouseY >= 770) && (MouseY <= 825) && (DialogFocusItem.Property.Intensity < 3)) InventoryItemButtEggVibePlugXXLSetIntensity(3 - DialogFocusItem.Property.Intensity);
 }
 
-// Sets the bunny vibe plug intensity
+// Sets the Egg Vibe plug intensity
 function InventoryItemButtEggVibePlugXXLSetIntensity(Modifier) {
 	var C = (Player.FocusGroup != null) ? Player : CurrentCharacter;
 	DialogFocusItem.Property.Intensity = DialogFocusItem.Property.Intensity + Modifier;
